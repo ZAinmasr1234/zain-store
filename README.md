@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZAIN STORE | الحماية الملكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #00f2ff; --fire: #ff4500; --gold: #f1c40f; --bg: #010510; }
+        
+        body { 
+            margin: 0; padding: 0; background: var(--bg); font-family: 'Cairo', sans-serif; color: white; text-align: center; 
+            background-image: radial-gradient(circle at center, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+        }
+
+        /* شاشة الافتتاح */
+        #intro-screen { position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: black; z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1s ease-in-out; }
+        .fire-neon-text { font-size: 60px; font-weight: 900; color: #fff; text-shadow: 0 0 20px var(--fire), 0 0 40px var(--fire); animation: glow 1.2s infinite alternate; }
+        @keyframes glow { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+        /* شاشة كلمة المرور */
+        #login-screen { position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: var(--bg); z-index: 99999; display: none; flex-direction: column; justify-content: center; align-items: center; }
+        .login-box { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 30px; border: 2px solid var(--neon); box-shadow: 0 0 30px var(--neon); width: 80%; max-width: 400px; }
+
+        /* ستايل الموقع الأساسي (مخفي في البداية) */
+        #main-content { display: none; }
+
+        nav { background: rgba(0,0,0,0.9); padding: 12px 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--neon); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
+        .brand-name { font-size: 22px; color: var(--gold); text-shadow: 0 0 10px var(--gold); text-decoration: none; font-weight: 900; }
+
+        #side-menu { position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background: rgba(1, 5, 16, 0.98); border-left: 2px solid var(--gold); z-index: 2000; transition: 0.5s; padding: 30px 15px; text-align: right; overflow-y: auto; }
+        .support-link-btn { display: block; background: #25d366; color: white; text-align: center; padding: 12px; border-radius: 12px; text-decoration: none; margin: 10px 0; font-weight: bold; }
+
+        .helper-card { background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--gold); border-radius: 20px; padding: 15px; margin: 20px auto; max-width: 550px; display: flex; align-items: center; gap: 15px; }
+        .price-card { background: rgba(255,255,255,0.05); border: 1px solid var(--neon); border-radius: 25px; padding: 25px; margin: 20px auto; max-width: 500px; box-shadow: 0 0 30px rgba(0,242,255,0.1); }
+        .price-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cost { color: var(--gold); font-size: 19px; font-weight: bold; }
+
+        .order-box { background: rgba(0,0,0,0.8); padding: 30px; border-radius: 35px; border: 2px solid var(--gold); max-width: 550px; margin: 20px auto; }
+        input, select { width: 100%; padding: 18px; margin: 10px 0; border-radius: 15px; border: 1px solid var(--neon); background: black; color: white; font-size: 16px; box-sizing: border-box; text-align: center; }
+        
+        .btn-send { background: linear-gradient(90deg, #ff4500, #ff8c00); color: white; width: 100%; padding: 18px; border: none; border-radius: 20px; font-size: 22px; font-weight: 900; cursor: pointer; margin-top: 10px; }
+        .locked-section { opacity: 0.4; filter: grayscale(1); margin: 40px 0; }
+    </style>
+</head>
+<body>
+
+<div id="intro-screen">
+    <div class="fire-neon-text">ZAIN STORE</div>
+    <div style="color: var(--gold); margin-top: 20px; font-weight: bold;">FF BOOYAH EDITION 🛡️</div>
+</div>
+<audio id="action-sound" src="https://www.soundjay.com/nature/thunder-01.mp3" preload="auto"></audio>
+
+<div id="login-screen">
+    <div class="login-box">
+        <h2 style="color: var(--gold); margin-bottom: 20px;">🛡️ وصول مقيد</h2>
+        <p style="font-size: 14px; color: #ccc;">أدخل كلمة المرور الخاصة بالإمبراطور زين</p>
+        <input type="password" id="pass-input" placeholder="ادخل الكود هنا...">
+        <button class="btn-send" onclick="checkPassword()">دخول للمتجر ✅</button>
+        <p id="error-msg" style="color: var(--fire); font-size: 13px; margin-top: 10px; display: none;">❌ كلمة المرور غير صحيحة!</p>
+    </div>
+</div>
+
+<div id="main-content">
+    <nav>
+        <a href="#" class="brand-name">ZAIN STORE 👑</a>
+        <button style="background:none; border:1px solid var(--neon); color:var(--neon); padding:5px 15px; border-radius:8px; cursor:pointer;" onclick="toggleMenu()">الدعم</button>
+    </nav>
+
+    <div id="side-menu">
+        <h3 style="color: var(--gold); text-align: center;">تواصل معنا 📞</h3>
+        <a href="https://wa.me/201021431977" class="support-link-btn">واتساب: دعم 1 (زين)</a>
+        <a href="https://wa.me/2012010233693" class="support-link-btn">واتساب: دعم 2</a>
+        <a href="https://wa.me/201203955533" class="support-link-btn" style="background: #0088cc;">واتساب: فورتكس (المساعد)</a>
+        <button class="btn-send" style="padding:10px; font-size:14px;" onclick="toggleMenu()">إغلاق</button>
+    </div>
+
+    <section class="game-section">
+        <div class="helper-card">
+            <div style="font-size: 30px;">🛰️</div>
+            <div class="helper-info" style="text-align: right;">
+                <h4>المساعد الرسمي: فورتكس</h4>
+                <p style="font-size: 12px; color: #ccc;">متاح للشحن الفوري في حال انشغال زين.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <h1 style="color: var(--fire); font-size: 40px; text-shadow: 0 0 20px var(--fire);">FREE FIRE</h1>
+            <p style="color: var(--neon); font-weight: bold;">BOOYAH! | الأسعار المخفضة 💎</p>
+        </div>
+        
+        <div class="price-card">
+            <div class="price-item"><span>50 جوهرة</span> <span class="cost">30 ج</span></div>
+            <div class="price-item"><span>100 جوهرة</span> <span class="cost">55 ج</span></div>
+            <div class="price-item"><span>210 جوهرة</span> <span class="cost">110 ج</span></div>
+            <div class="price-item"><span>310 جوهرة</span> <span class="cost">155 ج</span></div>
+            <div class="price-item"><span>520 جوهرة</span> <span class="cost">255 ج</span></div>
+            <div class="price-item"><span>1060 جوهرة</span> <span class="cost">510 ج</span></div>
+            <div class="price-item" style="border:none; color: var(--gold);"><span>2200 جوهرة</span> <span class="cost">1100 ج</span></div>
+        </div>
+
+        <div class="order-box">
+            <select id="amount_select">
+                <option value="" disabled selected>--- اختر الكمية ---</option>
+                <option value="50 جوهرة">50 جوهرة - 30 ج</option>
+                <option value="100 جوهرة">100 جوهرة - 55 ج</option>
+                <option value="210 جوهرة">210 جوهرة - 110 ج</option>
+                <option value="310 جوهرة">310 جوهرة - 155 ج</option>
+                <option value="520 جوهرة">520 جوهرة - 255 ج</option>
+                <option value="1060 جوهرة">1060 جوهرة - 510 ج</option>
+                <option value="2200 جوهرة">2200 جوهرة - 1100 ج</option>
+            </select>
+            <input type="text" id="id_player" placeholder="الـ ID + اسم اللاعب">
+            <input type="tel" id="sender_num" placeholder="رقم المحفظة (11 رقم)" maxlength="11">
+            <input type="file" id="screenshot_file" accept="image/*">
+            <button class="btn-send" onclick="validate('zain')">إرسال الطلب لزين ✅</button>
+            <button class="btn-send" style="background: #0088cc;" onclick="validate('vortex')">إرسال لـ فورتكس 🛰️</button>
+        </div>
+    </section>
+
+    <div class="locked-section"><h2>PUBG MOBILE (قريباً)</h2></div>
+    <div class="locked-section"><h2>ROBLOX (قريباً)</h2></div>
+</div>
+
+<script>
+    // كلمة المرور (تقدر تغيرها من هنا)
+    const SECRET_PASSWORD = "ZAIN2026";
+
+    window.onload = function() {
+        const sound = document.getElementById('action-sound');
+        sound.play().catch(e => {});
+        
+        setTimeout(() => {
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+            }, 1000);
+        }, 3000);
+    };
+
+    function checkPassword() {
+        const input = document.getElementById('pass-input').value;
+        const error = document.getElementById('error-msg');
+        
+        if(input === SECRET_PASSWORD) {
+            document.getElementById('login-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            }, 500);
+        } else {
+            error.style.display = 'block';
+            document.getElementById('pass-input').value = "";
+        }
+    }
+
+    function toggleMenu() {
+        const menu = document.getElementById('side-menu');
+        menu.style.right = (menu.style.right === '0px') ? '-100%' : '0px';
+    }
+
+    function validate(target) {
+        const amt = document.getElementById('amount_select').value;
+        const id = document.getElementById('id_player').value;
+        const num = document.getElementById('sender_num').value;
+        const file = document.getElementById('screenshot_file').files[0];
+        const egyptRegex = /^(010|011|012|015)[0-9]{8}$/;
+
+        if(!amt || !id || !num || !file) { alert("⚠️ أكمل البيانات!"); return; }
+        if(!egyptRegex.test(num)) { alert("❌ الرقم غير صحيح!"); return; }
+
+        const phone = (target === 'zain') ? '201021431977' : '201203955533';
+        const text = encodeURIComponent(`🎮 طلب شحن VIP\n💎 الكمية: ${amt}\n🆔 الـ ID: ${id}\n📲 المحول: ${num}\n🛡️ ZAIN STORE`);
+        window.location.replace("https://api.whatsapp.com/send?phone=" + phone + "&text=" + text);
+    }
+</script>
+</body>
+</html>
+
