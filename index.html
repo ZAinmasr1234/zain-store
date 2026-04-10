@@ -3,114 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE VIP | زين ستور</title>
+    <title>ZAIN STORE ULTIMATE | زين ستور</title>
     <style>
-        :root { --neon: #00f2ff; --gold: #f1c40f; --bg: #010816; --success: #2ecc71; }
+        :root { --neon: #00f2ff; --gold: #f1c40f; --bg: #010816; --success: #2ecc71; --support: #a29bfe; }
         body { margin: 0; background: radial-gradient(circle at top, #0a2e5c 0%, var(--bg) 100%); font-family: 'Cairo', sans-serif; color: white; text-align: center; }
-        header { padding: 30px; border-bottom: 3px solid var(--neon); background: rgba(0,0,0,0.8); box-shadow: 0 0 20px var(--neon); }
-        .logo { font-size: 40px; color: var(--neon); text-shadow: 0 0 15px var(--neon); margin: 0; font-weight: 900; }
-        .container { padding: 15px; max-width: 550px; margin: auto; }
+        header { padding: 40px 20px; border-bottom: 3px solid var(--neon); background: rgba(0,0,0,0.9); box-shadow: 0 0 25px var(--neon); }
+        .logo { font-size: 45px; color: var(--neon); text-shadow: 0 0 20px var(--neon); margin: 0; font-weight: 900; }
+        .container { padding: 20px; max-width: 600px; margin: auto; }
         
-        /* قسم الأسعار */
-        .section-title { color: var(--gold); text-align: right; margin: 25px 10px 10px; font-size: 20px; border-right: 5px solid var(--gold); padding-right: 15px; }
-        .price-card { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--neon); border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .price-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 15px; }
+        .section-title { color: var(--gold); text-align: right; margin: 30px 10px 10px; font-size: 22px; border-right: 6px solid var(--gold); padding-right: 15px; text-shadow: 0 0 10px var(--gold); }
+        .price-card { background: rgba(255, 255, 255, 0.05); border: 2px solid var(--neon); border-radius: 25px; padding: 20px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .price-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 16px; }
         .cost { color: var(--gold); font-weight: bold; }
 
-        /* نموذج الطلب */
-        .order-box { background: rgba(0,0,0,0.9); padding: 25px; border-radius: 25px; border: 2px solid var(--gold); margin-top: 20px; position: relative; }
-        input, select { width: 100%; padding: 14px; margin: 8px 0; border-radius: 12px; border: 1px solid var(--neon); background: #000; color: white; font-size: 16px; outline: none; box-sizing: border-box; }
-        .btn-send { background: linear-gradient(90deg, #2ecc71, #27ae60); color: white; width: 100%; padding: 18px; border: none; border-radius: 15px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 20px rgba(46,204,113,0.3); transition: 0.3s; }
-        .btn-send:active { transform: scale(0.95); }
+        .order-box { background: rgba(0,0,0,0.95); padding: 30px; border-radius: 30px; border: 2px solid var(--gold); margin-top: 30px; }
+        input, select { width: 100%; padding: 16px; margin: 10px 0; border-radius: 15px; border: 1px solid var(--neon); background: #000; color: white; font-size: 17px; outline: none; box-sizing: border-box; }
+        
+        .btn-send { background: linear-gradient(90deg, #2ecc71, #27ae60); color: white; width: 100%; padding: 20px; border: none; border-radius: 18px; font-size: 22px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(46,204,113,0.4); margin-bottom: 15px; }
+        .btn-support { background: linear-gradient(90deg, #6c5ce7, #a29bfe); color: white; width: 100%; padding: 15px; border: none; border-radius: 18px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(108,92,231,0.3); }
+        .btn-send:active, .btn-support:active { transform: scale(0.95); }
 
-        /* نافذة التأكيد */
-        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: #0a2e5c; border: 3px solid var(--gold); padding: 30px; border-radius: 25px; width: 85%; max-width: 400px; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-box { background: #0a2e5c; border: 3px solid var(--gold); padding: 35px; border-radius: 30px; width: 85%; max-width: 450px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 class="logo">ZAIN STORE VIP</h1>
-    <p style="color: var(--success); font-size: 13px; margin: 5px 0;">🛡️ ثقة • أمان • سرعة | The Web Team</p>
+    <h1 class="logo">ZAIN STORE</h1>
+    <p style="color: var(--success); font-size: 14px;">🛡️ الثقة والأمان | ضمان استرداد الأموال كاملة</p>
 </header>
 
 <div class="container">
-    <div class="section-title">💎 جواهر فري فاير (الـ ID) - مارس 2026</div>
+    <div class="section-title">💎 جواهر فري فاير (الـ ID)</div>
     <div class="price-card">
-        <div class="price-item"><span>50 جوهرة 💎</span> <span class="cost">35 جنيه</span></div>
-        <div class="price-item"><span>100 جوهرة 💎</span> <span class="cost">60 جنيه</span></div>
-        <div class="price-item"><span>210 جوهرة 💎</span> <span class="cost">115 جنيه</span></div>
-        <div class="price-item"><span>310 جوهرة 💎</span> <span class="cost">160 جنيه</span></div>
-        <div class="price-item"><span>520 جوهرة 💎</span> <span class="cost">260 جنيه</span></div>
-        <div class="price-item"><span>1060 جوهرة 💎</span> <span class="cost">515 جنيه</span></div>
-        <div class="price-item"><span>2200 جوهرة 🚀</span> <span class="cost">1100 جنيه</span></div>
+        <div class="price-item"><span>50 جوهرة 💎</span> <span class="cost">35 ج</span></div>
+        <div class="price-item"><span>100 جوهرة 💎</span> <span class="cost">60 ج</span></div>
+        <div class="price-item"><span>210 جوهرة 💎</span> <span class="cost">115 ج</span></div>
+        <div class="price-item"><span>310 جوهرة 💎</span> <span class="cost">160 ج</span></div>
+        <div class="price-item"><span>520 جوهرة 💎</span> <span class="cost">260 ج</span></div>
+        <div class="price-item"><span>1060 جوهرة 💎</span> <span class="cost">515 ج</span></div>
+        <div class="price-item"><span>2200 جوهرة 🚀</span> <span class="cost">1100 ج</span></div>
     </div>
 
     <div class="order-box">
-        <h3 style="color: var(--neon); margin-top: 0;">نموذج طلب الشحن الموحد</h3>
-        <p style="font-size: 14px; color: var(--gold); margin-bottom: 15px;">📌 رقم فودافون كاش: 01021431977 📲</p>
+        <p style="color: var(--gold); font-weight: bold;">رقم الكاش: 01021431977 📲</p>
         
         <select id="game_type">
-            <option value="فري فاير">💎 فري فاير (الأسعار أعلاه)</option>
-            <option value="ببجي موبايل">🔫 ببجي موبايل (PUBG)</option>
-            <option value="روبلوكس">🧱 روبلوكس (Roblox)</option>
-            <option value="فيفا FC24">⚽ فيفا (EA Sports FC)</option>
-            <option value="بيس eFootball">⚽ بيس (eFootball)</option>
-            <option value="كلاش اوف كلانز">🏰 كلاش اوف كلانز</option>
-            <option value="لودو كينج">🎲 لودو كينج</option>
-            <option value="فالورانت">🎯 فالورانت</option>
-            <option value="لعبة أخرى (50 لعبة)">🎮 لعبة أخرى (من قائمة الـ 50)</option>
+            <option value="فري فاير">💎 فري فاير (متاح الآن)</option>
+            <option value="ببجي">🔫 ببجي موبايل (قريباً ⏳)</option>
+            <option value="روبلوكس">🧱 روبلوكس (قريباً ⏳)</option>
+            <option value="فيفا">⚽ فيفا FC (قريباً ⏳)</option>
+            <option value="بيس">⚽ بيس eFootball (قريباً ⏳)</option>
+        </select>
+
+        <select id="amount">
+            <option value="" disabled selected>حدد عدد الجواهر المطلوبة 💎</option>
+            <option value="50 جوهرة">50 جوهرة</option>
+            <option value="100 جوهرة">100 جوهرة</option>
+            <option value="210 جوهرة">210 جوهرة</option>
+            <option value="310 جوهرة">310 جوهرة</option>
+            <option value="520 جوهرة">520 جوهرة</option>
+            <option value="1060 جوهرة">1060 جوهرة</option>
+            <option value="2200 جوهرة">2200 جوهرة</option>
         </select>
         
-        <input type="text" id="id_player" placeholder="الـ ID الخاص بك + الاسم في اللعبة">
-        <input type="text" id="sender_num" placeholder="رقم المحفظة الذي حولت منه">
-        
-        <label style="display:block; text-align:right; font-size:12px; color:var(--neon); margin: 10px 0 5px;">1️⃣ ارفق سكرين شوت التحويل:</label>
-        <input type="file" id="screenshot_file" accept="image/*" style="border:none; color: #888;">
+        <input type="text" id="id_player" placeholder="أدخل الـ ID + الاسم في اللعبة">
+        <input type="text" id="sender_num" placeholder="رقم المحفظة المحول منه">
+        <input type="file" id="screenshot_file" accept="image/*">
 
-        <button class="btn-send" onclick="openSafetyModal()">تأكيد وإرسال الطلب ✅</button>
+        <button class="btn-send" onclick="showM()">إرسال طلب الشحن ✅</button>
+        
+        <hr style="border: 0.5px solid rgba(0,242,255,0.2); margin: 20px 0;">
+        
+        <button class="btn-support" onclick="contactSupport()">📞 فريق الدعم والشكاوي</button>
     </div>
 </div>
 
-<div id="modal-overlay">
-    <div class="modal-content">
-        <h2 style="color: var(--gold);">⚠️ ميثاق الأمان والضمان</h2>
-        <p style="text-align: right; line-height: 1.8; font-size: 14px;">
-            - يتم تنفيذ الطلب خلال **5 لـ 10 دقائق**.<br>
-            - **ضمان كامل:** في حال حدوث أي خطأ تقني، أموالك تعود لمحفظتك فوراً.<br>
-            - سيتم فتح الواتساب الآن لإتمام العملية بنجاح.
+<div id="modal">
+    <div class="modal-box">
+        <h2 style="color: var(--gold);">⚠️ تنبيه الأمان</h2>
+        <p style="text-align: right; line-height: 1.8; font-size: 15px;">
+            1- سيفتح الواتساب الآن بالبيانات.<br>
+            2- **ارفق صورة التحويل يدوياً** لضمان حقك.<br>
+            3- تنفيذ سريع وضمان استرداد مفعل.<br>
         </p>
-        <button class="btn-send" style="background: var(--gold); color: black;" onclick="confirmAndGo()">موافق، إرسال الآن</button>
+        <button class="btn-send" style="background: var(--gold); color: black;" onclick="confirmAndGo()">فهمت، إرسال الآن</button>
     </div>
 </div>
 
 <script>
-function openSafetyModal() {
+function showM() {
     const id = document.getElementById('id_player').value;
+    const amt = document.getElementById('amount').value;
     const num = document.getElementById('sender_num').value;
     const file = document.getElementById('screenshot_file').files[0];
-    
-    if(!id || !num || !file) { 
-        alert("برجاء إدخال الـ ID، رقم المحفظة، وصورة التحويل!"); 
-        return; 
-    }
-    document.getElementById('modal-overlay').style.display = 'flex';
+    if(!id || !amt || !num || !file) { alert("أكمل البيانات واختار الصورة!"); return; }
+    document.getElementById('modal').style.display = 'flex';
 }
 
 function confirmAndGo() {
     const id = document.getElementById('id_player').value;
     const game = document.getElementById('game_type').value;
+    const amt = document.getElementById('amount').value;
     const num = document.getElementById('sender_num').value;
-    
-    // الحل النهائي والقطعي للعطل: استخدام رابط api.whatsapp.com
-    const text = encodeURIComponent(`🎮 طلب شحن من ZAIN STORE\n━━━━━━━━━━━━━━\n🕹️ اللعبة: ${game}\n🆔 الـ ID والاسم: ${id}\n📲 المحول: ${num}\n━━━━━━━━━━━━━━\n🖼️ سأقوم بإرفاق السكرين الآن..\n🛡️ أوافق على شروط الأمان وضمان الاسترداد.`);
-    const waUrl = "https://api.whatsapp.com/send?phone=201021431977&text=" + text;
-    
-    window.location.replace(waUrl);
+    const text = encodeURIComponent(`🎮 طلب شحن VIP\n🕹️ اللعبة: ${game}\n💎 الكمية: ${amt}\n🆔 الـ ID: ${id}\n📲 رقم المحول: ${num}\n🛡️ أوافق على شروط الأمان.`);
+    window.location.replace("https://api.whatsapp.com/send?phone=201021431977&text=" + text);
+}
+
+function contactSupport() {
+    const supportText = encodeURIComponent("مرحباً زين ستور، لدي استفسار / شكوى بخصوص عملية شحن.");
+    window.location.replace("https://api.whatsapp.com/send?phone=201021431977&text=" + supportText);
 }
 </script>
 
 </body>
 </html>
-
