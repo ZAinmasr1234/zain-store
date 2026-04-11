@@ -18,12 +18,10 @@
         body { margin: 0; padding: 0; background: var(--bg-dark); font-family: 'Cairo', sans-serif; color: white; overflow-x: hidden; }
         body.locked { overflow: hidden; }
 
-        /* تنبيه زين الفخم */
         .zain-alert { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
         .zain-alert-card { background: #080808; border: 2px solid var(--gold); padding: 30px; border-radius: 25px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 0 40px rgba(241, 196, 15, 0.3); animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* شاشة الدخول */
         #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px; }
         .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(35px, 8vw, 65px); font-weight: 900; min-height: 80px; color: white; }
         .neon-active { animation: neonCycle 2s infinite; }
@@ -34,7 +32,6 @@
         .top-warning-bar { background: rgba(0, 0, 0, 0.8); color: white; padding: 15px 0; font-size: 19px; font-weight: 900; position: sticky; top: 0; z-index: 5000; border-bottom: 2px solid var(--border); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .highlight-gold { color: var(--gold); font-weight: 900; text-shadow: 0 0 10px var(--gold); }
         
-        /* الأزرار العائمة */
         .go-to-p2 { position: fixed; bottom: 90px; right: 20px; z-index: 4000; background: rgba(0,0,0,0.9); border: 2px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 900; font-size: 13px; display: none; align-items: center; gap: 8px; animation: pulse-gold 2s infinite; }
         .support-float { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #000; border: 2px solid var(--primary); padding: 12px 35px; border-radius: 50px; text-align: center; z-index: 4000; cursor: pointer; display: none; animation: pulse-blue 2.5s infinite; }
         @keyframes pulse-gold { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 20px var(--gold); } }
@@ -56,24 +53,9 @@
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
         .modal-card { background: #050505; border: 2px solid var(--gold); padding: 30px; border-radius: 30px; text-align: center; width: 100%; max-width: 380px; }
         .support-btn { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid var(--primary); color: var(--primary); border-radius: 12px; display: block; text-decoration: none; font-weight: 900; }
-        
-        .password-input-gold { background: #000; border: 1px solid var(--gold); color: var(--gold); text-align: center; font-size: 20px; letter-spacing: 5px; margin-top: 15px; width: 80%; border-radius: 10px; padding: 10px; }
-        .lucky-text { color: var(--gold); font-size: 20px; font-weight: 900; animation: bounce 1s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     </style>
 </head>
 <body class="locked">
-
-<div id="password-modal" class="modal">
-    <div class="modal-card">
-        <h1 style="font-size:40px">🔐</h1>
-        <h3 style="color:var(--gold)">منطقة المحظوظين</h3>
-        <p style="color:#ccc; font-size:14px">أدخل كلمة السر لاستلام الهدية فوراً</p>
-        <input type="password" id="gift-pass-input" class="password-input-gold" placeholder="••••">
-        <button onclick="verifyGiftPassword()" style="width:100%; padding:15px; background:var(--gold); color:black; border:none; border-radius:12px; font-weight:900; margin-top:15px; cursor:pointer;">تأكيد ✅</button>
-        <button onclick="closePasswordModal()" style="background:none; border:none; color:#555; margin-top:10px; cursor:pointer;">إلغاء</button>
-    </div>
-</div>
 
 <div id="zain-alert-overlay" class="zain-alert">
     <div class="zain-alert-card">
@@ -123,8 +105,7 @@
         <div id="ff_section" class="price-section">
             <h3 style="color:var(--gold)">فري فاير 💎</h3>
             <div class="price-grid">
-                <div class="price-card" onclick="selectItem(this, '50 جوهرة - 30 EGP')">50💎<br><small style="color:var(--gold)">30 EGP</small></div>
-                <div class="price-card" id="ff_gift" style="border:2px solid var(--gold)" onclick="selectItem(this, '100 جوهرة - مجاناً')">100💎<br><small style="color:#25d366">ببلاش (لأول شخص) 🔥</small></div>
+                <div class="price-card" onclick="selectItem(this, '100 جوهرة - 55 EGP')">100💎<br><small style="color:var(--gold)">55 EGP</small></div>
                 <div id="ff-list" style="display:contents"></div>
             </div>
         </div>
@@ -158,7 +139,9 @@
 
 <div id="confirm-modal" class="modal">
     <div class="modal-card">
-        <div id="cash-area" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 20px;"></div>
+        <div id="cash-area" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 20px;">
+             <span style="color:white; font-weight:900; font-size:22px;" class="highlight-gold">01021431977</span>
+        </div>
         <div id="summary" style="text-align:right; margin-bottom:20px; color:#ccc; border-right:3px solid var(--primary); padding-right:15px;"></div>
         <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--primary); border:none; border-radius:12px; font-weight:900; cursor:pointer;">إرسال للواتساب 🚀</button>
         <button onclick="document.getElementById('confirm-modal').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">إلغاء</button>
@@ -168,7 +151,6 @@
 <script>
     let selPack = "";
     const nameText = "ZAIN STORE";
-    const GIFT_PASSWORD = "ZAIN100";
 
     function showZainAlert(msg, icon = "⚠️") {
         document.getElementById('alert-msg').innerText = msg;
@@ -180,6 +162,7 @@
     function startIntro() {
         let i = 0;
         const nameBox = document.getElementById('name-box');
+        nameBox.innerHTML = ""; // التأكد من إفراغ الحاوية قبل البدء
         function type() {
             if(i < nameText.length) { nameBox.innerHTML += nameText.charAt(i); i++; setTimeout(type, 110); }
             else { nameBox.classList.add('neon-active'); showCert(); }
@@ -202,7 +185,13 @@
 
     function fill(arr, id) { arr.forEach(p => document.getElementById(id).innerHTML += `<div class="price-card" onclick="selectItem(this, '${p}')">${p.replace(' - ', '<br><small style="color:var(--gold)">')} </small></div>`); }
     
-    window.onload = () => { startIntro(); fill(pubg, 'pubg-list'); fill(ff, 'ff-list'); fill(cod, 'cod-list'); };
+    // استخدام event listener بدلاً من window.onload لضمان التنفيذ
+    document.addEventListener("DOMContentLoaded", () => { 
+        startIntro(); 
+        fill(pubg, 'pubg-list'); 
+        fill(ff, 'ff-list'); 
+        fill(cod, 'cod-list'); 
+    });
 
     function toggleSections() { 
         const g = document.getElementById('game_select').value; 
@@ -215,11 +204,6 @@
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active')); 
         el.classList.add('active'); 
         selPack=v; 
-        if(v.includes("مجاناً")) {
-            document.getElementById('sender_number').style.display = 'none';
-        } else {
-            document.getElementById('sender_number').style.display = 'block';
-        }
     }
 
     function openConfirm() {
@@ -231,49 +215,16 @@
         if(!game) return showZainAlert("اختر اللعبه الاول يابطل 🎮");
         if(!id) return showZainAlert("فين الاي دي يروحي 🧐");
         if(!selPack) return showZainAlert("حدد الكمية اللي عاوز تشحنها 💎");
+        if(!num) return showZainAlert("فين رقم المحفظة اللي حولت منه؟ 😂");
+        if(!phoneRegex.test(num)) return showZainAlert("الرقم مش مظبوط.. اتأكد إنه 11 رقم مصري ❌");
 
-        if(!selPack.includes("مجاناً")) {
-            if(!num) return showZainAlert("فين رقم المحفظة اللي حولت منه؟ 😂");
-            if(!phoneRegex.test(num)) return showZainAlert("الرقم مش مظبوط.. اتأكد إنه 11 رقم مصري ❌");
-        }
-
-        if(selPack.includes("مجاناً")) {
-            document.getElementById('password-modal').style.display = 'flex';
-        } else {
-            showFinalConfirm();
-        }
-    }
-
-    function verifyGiftPassword() {
-        if(document.getElementById('gift-pass-input').value === GIFT_PASSWORD) {
-            document.getElementById('password-modal').style.display = 'none';
-            showFinalConfirm();
-        } else {
-            showZainAlert("كلمة السر غلط! الهدية دي لشخص محدد 😢");
-        }
-    }
-
-    function closePasswordModal() { document.getElementById('password-modal').style.display = 'none'; }
-
-    function showFinalConfirm() {
-        const id = document.getElementById('player_id').value;
-        const num = document.getElementById('sender_number').value;
-        const game = document.getElementById('game_select').value;
-        const cashArea = document.getElementById('cash-area');
-        
-        if(selPack.includes("مجاناً")) {
-            cashArea.innerHTML = `<div class="lucky-text">مبروك! الهدية بتاعتك يا بطل 🎁✅</div>`;
-            document.getElementById('summary').innerHTML = `<p>🎮 اللعبة: ${game.toUpperCase()}</p><p>💎 الكمية: ${selPack.split(' - ')[0]}</p><p>🆔 الآي دي: ${id}</p><p>🎁 الحالة: هدية مجانية</p>`;
-        } else {
-            cashArea.innerHTML = `<span style="color:white; font-weight:900; font-size:22px;" class="highlight-gold">01021431977</span>`;
-            document.getElementById('summary').innerHTML = `<p>🎮 اللعبة: ${game.toUpperCase()}</p><p>💎 الكمية: ${selPack.split(' - ')[0]}</p><p>🆔 الآي دي: ${id}</p><p>📞 الرقم: ${num}</p>`;
-        }
+        document.getElementById('summary').innerHTML = `<p>🎮 اللعبة: ${game.toUpperCase()}</p><p>💎 الكمية: ${selPack.split(' - ')[0]}</p><p>🆔 الآي دي: ${id}</p><p>📞 الرقم: ${num}</p>`;
         document.getElementById('confirm-modal').style.display='flex';
     }
 
     function sendOrder() {
         const id = document.getElementById('player_id').value;
-        const num = document.getElementById('sender_number').value || "طلب هدية مجانية";
+        const num = document.getElementById('sender_number').value;
         const game = document.getElementById('game_select').value;
         const text = `👑 طلب شحن من ZAIN STORE%0A🎮 اللعبة: ${game.toUpperCase()}%0A💎 الكمية: ${selPack}%0A🆔 الآي دي: ${id}%0A📞 من رقم: ${num}`;
         window.location.href = `https://wa.me/201021431977?text=${text}`;
