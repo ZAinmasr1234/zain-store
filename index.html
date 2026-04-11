@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE | المنصة العالمية المعتمدة للشحن</title>
+    <title>ZAIN STORE | المنصة العالمية المعتمدة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,7 +13,6 @@
             --bg-dark: #010614;
             --card-bg: rgba(255, 255, 255, 0.04);
             --border: rgba(0, 242, 255, 0.2);
-            --success: #25d366;
         }
 
         body {
@@ -23,160 +22,92 @@
             overflow-x: hidden;
         }
 
-        /* --- شاشة الافتتاح الذكية (Typing Effect) --- */
+        /* --- شاشة الانترو (كتابة الاسم) --- */
         #intro-screen {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0;
             background: #000; z-index: 100000; display: flex; flex-direction: column;
             justify-content: center; align-items: center; transition: 1s ease-in-out;
         }
 
-        .typing-container {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(30px, 8vw, 60px);
-            font-weight: 900;
-            color: white;
-            position: relative;
-            display: inline-block;
-        }
-
-        #cursor {
-            display: inline-block;
-            width: 3px;
-            background-color: var(--primary);
-            margin-right: 5px;
-            animation: blink 0.7s infinite;
-        }
-
+        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 8vw, 60px); font-weight: 900; color: white; }
+        #cursor { display: inline-block; width: 3px; background-color: var(--primary); margin-right: 5px; animation: blink 0.7s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .glow-text { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); transition: 0.5s; }
+        .glow-text { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); }
 
-        /* --- التصميم العلوي --- */
-        nav {
-            background: rgba(1, 6, 20, 0.95); padding: 20px 5%;
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px);
-        }
-
-        .nav-logo { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; color: var(--gold); text-shadow: 0 0 10px rgba(241, 196, 15, 0.3); }
-        .nav-badge { background: var(--primary); color: black; font-size: 10px; padding: 3px 10px; border-radius: 5px; font-weight: 900; }
-
-        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
-
-        /* --- استمارة البيانات المحسنة --- */
-        .order-form {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--gold);
-            padding: 25px; border-radius: 25px; margin-top: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .input-group { margin-bottom: 20px; text-align: right; }
-        .input-group label { display: block; margin-bottom: 10px; font-size: 15px; color: var(--primary); font-weight: bold; }
-        
-        input, select {
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border);
-            background: #050e21; color: white; font-family: 'Cairo'; box-sizing: border-box; font-size: 16px;
-            transition: 0.3s;
-        }
-
-        input:focus, select:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 15px rgba(241, 196, 15, 0.2); }
-
-        /* --- أقسام الأسعار --- */
-        .price-section { margin-top: 40px; display: none; animation: slideUp 0.5s ease forwards; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .section-header { 
-            display: flex; align-items: center; gap: 15px; margin-bottom: 20px; 
-            border-right: 5px solid var(--primary); padding-right: 15px;
-        }
-
-        .price-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .price-card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 15px; padding: 18px; display: flex;
-            justify-content: space-between; align-items: center; transition: 0.3s;
-        }
-        .price-card:hover { border-color: var(--primary); transform: scale(1.02); background: rgba(0,242,255,0.05); }
-        .val { color: var(--gold); font-weight: 900; font-family: 'Orbitron'; font-size: 18px; }
-
-        /* --- أزرار الدعم الفني --- */
-        .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .support-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 15px; border-radius: 15px; text-decoration: none; color: white; 
-            font-weight: bold; font-size: 14px; transition: 0.3s;
-        }
-        .wa-btn { background: #25d366; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2); }
-        .vx-btn { background: #0088cc; box-shadow: 0 5px 15px rgba(0, 136, 204, 0.2); }
-        .support-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
-
-        /* --- زر التأكيد الرئيسي --- */
-        .confirm-btn {
-            width: 100%; background: linear-gradient(45deg, var(--primary), #0066ff);
-            color: black; border: none; padding: 22px; border-radius: 18px;
-            font-size: 20px; font-weight: 900; cursor: pointer; margin-top: 35px;
-            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3); transition: 0.3s;
-        }
-
-        /* --- نافذة التأكيد (Pop-up) --- */
-        #confirm-modal {
+        /* --- شاشة الصيانة الإجبارية (الستارة) --- */
+        #maintenance-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 1000000; display: none;
-            justify-content: center; align-items: center; backdrop-filter: blur(10px);
+            background: rgba(1, 6, 20, 0.98); z-index: 90000;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(25px);
         }
-        .modal-card {
-            background: #0a1631; padding: 30px; border-radius: 30px;
-            border: 2px solid var(--gold); text-align: center; width: 85%; max-width: 450px;
-            box-shadow: 0 0 50px rgba(241, 196, 15, 0.2);
+        .m-card {
+            background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 40px;
+            border: 2px solid var(--secondary); text-align: center; width: 85%; max-width: 500px;
+            box-shadow: 0 0 50px rgba(255, 69, 0, 0.3);
         }
-        .modal-btns { display: flex; gap: 15px; margin-top: 30px; }
-        .m-btn { flex: 1; padding: 15px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; }
 
-        /* --- الألعاب القادمة --- */
-        .coming-soon { opacity: 0.4; filter: grayscale(1); margin-top: 50px; }
-        .soon-badge { font-size: 10px; background: #333; padding: 2px 8px; border-radius: 4px; }
+        /* --- محتوى الموقع (مخفي حالياً) --- */
+        nav { background: rgba(1, 6, 20, 0.95); padding: 20px 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--gold); }
+        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
+        .order-form { background: rgba(255,255,255,0.02); border: 1px solid var(--gold); padding: 25px; border-radius: 25px; margin-top: 10px; }
+        .input-group { margin-bottom: 20px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 10px; color: var(--primary); font-weight: bold; }
+        input, select { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border); background: #050e21; color: white; font-family: 'Cairo'; box-sizing: border-box; }
+        
+        .price-section { margin-top: 40px; display: none; }
+        .price-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 18px; display: flex; justify-content: space-between; align-items: center; }
+        .val { color: var(--gold); font-weight: 900; font-family: 'Orbitron'; }
+
+        /* أزرار الدعم */
+        .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .support-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; color: white; font-weight: bold; }
+        
+        /* مودال التأكيد */
+        #confirm-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000000; display: none; justify-content: center; align-items: center; }
+        .modal-card { background: #0a1631; padding: 30px; border-radius: 30px; border: 2px solid var(--gold); text-align: center; width: 85%; max-width: 450px; }
 
     </style>
 </head>
 <body>
 
 <div id="intro-screen">
-    <div class="typing-container">
-        <span id="text-slot"></span><span id="cursor">|</span>
+    <div class="typing-container"><span id="text-slot"></span><span id="cursor">|</span></div>
+</div>
+
+<div id="maintenance-overlay">
+    <div class="m-card">
+        <h1 style="font-size: 50px; margin: 0;">⚙️</h1>
+        <h2 style="color: white;">عفواً! الموقع تحت الصيانة</h2>
+        <p style="color: var(--gold); font-weight: bold;">نعمل على إضافة التحديثات الجديدة</p>
+        <p style="opacity: 0.7; font-size: 14px;">تم إيقاف استقبال الطلبات مؤقتاً لضمان أفضل خدمة. شكراً لثقتكم.</p>
+        <a href="https://wa.me/201021431977" style="display: block; margin-top: 20px; color: #25d366; text-decoration: none; font-weight: 900;">تواصل مع الدعم الفني عبر واتساب 💬</a>
     </div>
 </div>
 
 <nav>
     <div class="nav-logo">ZAIN STORE</div>
-    <div class="nav-badge">OFFICIAL 🛡️</div>
+    <div style="background:var(--primary); color:black; font-size:10px; padding:3px 8px; border-radius:5px; font-weight:900;">OFFICIAL 🛡️</div>
 </nav>
 
 <div class="container">
-    
     <div class="order-form">
-        <h3 style="text-align: center; color: var(--gold); margin: 0 0 25px 0; font-size: 22px;">بوابة البيانات المشفرة 🔒</h3>
-        
         <div class="input-group">
-            <label>1. اختر اللعبة المراد شحنها</label>
+            <label>اختر اللعبة</label>
             <select id="game_select" onchange="toggleSections()">
-                <option value="" disabled selected>-- اضغط للاختيار من القائمة --</option>
-                <option value="pubg">ببجي موبايل - PUBG MOBILE</option>
+                <option value="" disabled selected>-- اختر اللعبة --</option>
+                <option value="pubg">ببجي موبايل - PUBG</option>
                 <option value="ff">فري فاير - FREE FIRE</option>
             </select>
         </div>
-
-        <div class="input-group">
-            <label>2. آي دي اللاعب (ID)</label>
-            <input type="number" id="player_id" placeholder="أدخل الـ ID بدقة">
-        </div>
-
-        <div class="input-group">
-            <label>3. رقم المحفظة (الذي تم التحويل منه)</label>
-            <input type="number" id="sender_number" placeholder="رقم فودافون/اتصالات/أورانج كاش">
-        </div>
+        <div class="input-group"><label>آي دي اللاعب (ID)</label><input type="number" id="player_id"></div>
+        <div class="input-group"><label>رقم المحفظة</label><input type="number" id="sender_number"></div>
     </div>
 
     <div id="pubg_section" class="price-section">
-        <div class="section-header"><h2>PUBG MOBILE</h2></div>
+        <h3 style="color:var(--gold)">PUBG MOBILE PRICES</h3>
         <div class="price-grid">
             <div class="price-card"><span>60 UC</span> <span class="val">50 EGP</span></div>
             <div class="price-card"><span>325 UC</span> <span class="val">230 EGP</span></div>
@@ -194,51 +125,26 @@
     </div>
 
     <div id="ff_section" class="price-section">
-        <div class="section-header" style="border-right-color: var(--secondary);"><h2 style="color: var(--secondary);">FREE FIRE</h2></div>
+        <h3 style="color:var(--secondary)">FREE FIRE PRICES</h3>
         <div class="price-grid">
-            <div class="price-card"><span>100 + 10 جوهرة</span> <span class="val">55 EGP</span></div>
-            <div class="price-card"><span>210 + 21 جوهرة</span> <span class="val">110 EGP</span></div>
-            <div class="price-card"><span>310 + 31 جوهرة</span> <span class="val">155 EGP</span></div>
-            <div class="price-card"><span>530 + 53 جوهرة</span> <span class="val">255 EGP</span></div>
-            <div class="price-card"><span>1080 + 108 جوهرة</span> <span class="val">510 EGP</span></div>
-            <div class="price-card"><span>2200 + 220 جوهرة</span> <span class="val">1100 EGP</span></div>
-            <div class="price-card"><span>4400 + 440 جوهرة</span> <span class="val">2200 EGP</span></div>
-            <div class="price-card"><span>11000 + 1100 جوهرة 💎</span> <span class="val">5500 EGP</span></div>
+            <div class="price-card"><span>100 + 10</span> <span class="val">55 EGP</span></div>
+            <div class="price-card"><span>210 + 21</span> <span class="val">110 EGP</span></div>
+            <div class="price-card"><span>310 + 31</span> <span class="val">155 EGP</span></div>
+            <div class="price-card"><span>530 + 53</span> <span class="val">255 EGP</span></div>
+            <div class="price-card"><span>1080 + 108</span> <span class="val">510 EGP</span></div>
+            <div class="price-card"><span>2200 + 220</span> <span class="val">1100 EGP</span></div>
+            <div class="price-card"><span>4400 + 440</span> <span class="val">2200 EGP</span></div>
+            <div class="price-card"><span>11000 + 1100</span> <span class="val">5500 EGP</span></div>
         </div>
     </div>
 
     <div class="support-grid">
-        <a href="https://wa.me/201021431977" class="support-btn wa-btn">💬 دعم واتســاب</a>
-        <a href="https://wa.me/201021431977" class="support-btn vx-btn">⚡ دعم فولتكس</a>
-    </div>
-
-    <button class="confirm-btn" onclick="openConfirmation()">تأكيد الطلب وإرسال البيانات</button>
-
-    <div class="coming-soon">
-        <h3 style="border-right: 3px solid #555; padding-right: 10px;">ألعاب قادمة قريباً</h3>
-        <div class="price-grid">
-            <div class="price-card"><span>Call of Duty: Mobile</span> <span class="soon-badge">SOON</span></div>
-            <div class="price-card"><span>Roblox - Robux</span> <span class="soon-badge">SOON</span></div>
-        </div>
-    </div>
-
-</div>
-
-<div id="confirm-modal">
-    <div class="modal-card">
-        <h2 style="color: var(--primary); margin-top: 0;">تأكيد مراجعة الـ ID</h2>
-        <p style="font-size: 14px; opacity: 0.8;">لقد أدخلت المعرف التالي، هل هو صحيح؟</p>
-        <div id="id_review" style="font-size: 35px; font-weight: 900; color: var(--gold); margin: 20px 0; font-family: 'Orbitron';"></div>
-        <p style="color: #ff4500; font-size: 12px; font-weight: bold;">⚠️ المتجر غير مسؤول عن شحن ID خاطئ</p>
-        <div class="modal-btns">
-            <button class="m-btn" style="background: var(--primary); color: black;" onclick="finalSubmit()">تأكيد وصح ✅</button>
-            <button class="m-btn" style="background: #333; color: white;" onclick="closeConfirmation()">تعديل ❌</button>
-        </div>
+        <a href="https://wa.me/201021431977" class="support-btn" style="background:#25d366">واتســاب</a>
+        <a href="https://wa.me/201021431977" class="support-btn" style="background:#0088cc">فولتكس</a>
     </div>
 </div>
 
 <script>
-    // --- نظام الكتابة حرف حرف ---
     const brandName = "ZAIN STORE";
     const textSlot = document.getElementById('text-slot');
     let charIndex = 0;
@@ -251,51 +157,26 @@
         } else {
             textSlot.classList.add('glow-text');
             setTimeout(() => {
-                const intro = document.getElementById('intro-screen');
-                intro.style.opacity = '0';
-                setTimeout(() => intro.style.display = 'none', 1000);
+                document.getElementById('intro-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('intro-screen').style.display = 'none';
+                    // تظهر الصيانة الإجبارية بعد 2 ثانية
+                    setTimeout(() => {
+                        document.getElementById('maintenance-overlay').style.display = 'flex';
+                    }, 2000);
+                }, 1000);
             }, 1500);
         }
     }
     window.onload = startTyping;
 
-    // --- نظام العرض الذكي ---
     function toggleSections() {
         const game = document.getElementById('game_select').value;
         document.getElementById('pubg_section').style.display = game === 'pubg' ? 'block' : 'none';
         document.getElementById('ff_section').style.display = game === 'ff' ? 'block' : 'none';
     }
-
-    // --- نظام التأكيد Pop-up ---
-    function openConfirmation() {
-        const id = document.getElementById('player_id').value;
-        const game = document.getElementById('game_select').value;
-        const number = document.getElementById('sender_number').value;
-
-        if(!game || !id || !number) {
-            alert("يا بطل، كمل كل البيانات المطلوبة فوق الأول!");
-            return;
-        }
-
-        document.getElementById('id_review').textContent = id;
-        document.getElementById('confirm-modal').style.display = 'flex';
-    }
-
-    function closeConfirmation() {
-        document.getElementById('confirm-modal').style.display = 'none';
-    }
-
-    function finalSubmit() {
-        const game = document.getElementById('game_select').value;
-        const id = document.getElementById('player_id').value;
-        const number = document.getElementById('sender_number').value;
-        const gameText = game === 'pubg' ? 'PUBG MOBILE' : 'FREE FIRE';
-
-        const whatsappMsg = `👑 *طلب شحن من ZAIN STORE*%0A--------------------------%0A🎮 *اللعبة:* ${gameText}%0A🆔 *الآي دي:* ${id}%0A📞 *من رقم:* ${number}%0A--------------------------%0A⚡ _يرجى مراجعة التحويل وإتمام الشحن_`;
-        
-        window.location.href = `https://wa.me/201021431977?text=${whatsappMsg}`;
-    }
 </script>
 
 </body>
 </html>
+
