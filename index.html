@@ -26,7 +26,7 @@
         #intro-screen {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0;
             background: #000; z-index: 100000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: 1s ease-in-out;
+            justify-content: center; align-items: center; transition: 0.8s ease-in-out;
         }
 
         .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 8vw, 60px); font-weight: 900; color: white; }
@@ -34,10 +34,10 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .glow-text { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); }
 
-        /* --- شاشة الصيانة الإجبارية (الستارة) --- */
+        /* --- شاشة الصيانة الإجبارية (التي تظهر بعد 2 ثانية) --- */
         #maintenance-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 6, 20, 0.98); z-index: 90000;
+            background: rgba(1, 6, 20, 0.98); z-index: 110000;
             display: none; flex-direction: column; justify-content: center; align-items: center;
             backdrop-filter: blur(25px);
         }
@@ -45,9 +45,11 @@
             background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 40px;
             border: 2px solid var(--secondary); text-align: center; width: 85%; max-width: 500px;
             box-shadow: 0 0 50px rgba(255, 69, 0, 0.3);
+            animation: pulse 2s infinite ease-in-out;
         }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
-        /* --- محتوى الموقع (مخفي حالياً) --- */
+        /* --- محتوى الموقع (كامل ومحمي) --- */
         nav { background: rgba(1, 6, 20, 0.95); padding: 20px 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .nav-logo { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--gold); }
         .container { padding: 20px; max-width: 800px; margin: 0 auto; }
@@ -61,14 +63,8 @@
         .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 18px; display: flex; justify-content: space-between; align-items: center; }
         .val { color: var(--gold); font-weight: 900; font-family: 'Orbitron'; }
 
-        /* أزرار الدعم */
         .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         .support-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; color: white; font-weight: bold; }
-        
-        /* مودال التأكيد */
-        #confirm-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000000; display: none; justify-content: center; align-items: center; }
-        .modal-card { background: #0a1631; padding: 30px; border-radius: 30px; border: 2px solid var(--gold); text-align: center; width: 85%; max-width: 450px; }
-
     </style>
 </head>
 <body>
@@ -79,11 +75,12 @@
 
 <div id="maintenance-overlay">
     <div class="m-card">
-        <h1 style="font-size: 50px; margin: 0;">⚙️</h1>
-        <h2 style="color: white;">عفواً! الموقع تحت الصيانة</h2>
-        <p style="color: var(--gold); font-weight: bold;">نعمل على إضافة التحديثات الجديدة</p>
-        <p style="opacity: 0.7; font-size: 14px;">تم إيقاف استقبال الطلبات مؤقتاً لضمان أفضل خدمة. شكراً لثقتكم.</p>
-        <a href="https://wa.me/201021431977" style="display: block; margin-top: 20px; color: #25d366; text-decoration: none; font-weight: 900;">تواصل مع الدعم الفني عبر واتساب 💬</a>
+        <h1 style="font-size: 50px; margin: 0;">⚠️</h1>
+        <h2 style="color: white; margin: 15px 0;">عفواً! الموقع تحت الصيانة</h2>
+        <p style="color: var(--gold); font-weight: bold;">يتم الآن تحديث السيرفرات والأسعار</p>
+        <p style="opacity: 0.7; font-size: 14px; line-height: 1.6;">نعتذر عن استقبال أي طلبات حالياً، الموقع سيعود للعمل بشكل أقوى خلال ساعات قليلة.</p>
+        <div style="height: 2px; background: linear-gradient(90deg, transparent, var(--secondary), transparent); margin: 20px 0;"></div>
+        <a href="https://wa.me/201021431977" style="display: block; color: #25d366; text-decoration: none; font-weight: 900; font-size: 18px;">تواصل مباشر (WhatsApp) 💬</a>
     </div>
 </div>
 
@@ -103,11 +100,11 @@
             </select>
         </div>
         <div class="input-group"><label>آي دي اللاعب (ID)</label><input type="number" id="player_id"></div>
-        <div class="input-group"><label>رقم المحفظة</label><input type="number" id="sender_number"></div>
+        <div class="input-group"><label>رقم المحفظة الذي تم التحويل منه</label><input type="number" id="sender_number"></div>
     </div>
 
     <div id="pubg_section" class="price-section">
-        <h3 style="color:var(--gold)">PUBG MOBILE PRICES</h3>
+        <h3 style="color:var(--gold)">PUBG MOBILE PACKS</h3>
         <div class="price-grid">
             <div class="price-card"><span>60 UC</span> <span class="val">50 EGP</span></div>
             <div class="price-card"><span>325 UC</span> <span class="val">230 EGP</span></div>
@@ -125,7 +122,7 @@
     </div>
 
     <div id="ff_section" class="price-section">
-        <h3 style="color:var(--secondary)">FREE FIRE PRICES</h3>
+        <h3 style="color:var(--secondary)">FREE FIRE DIAMONDS</h3>
         <div class="price-grid">
             <div class="price-card"><span>100 + 10</span> <span class="val">55 EGP</span></div>
             <div class="price-card"><span>210 + 21</span> <span class="val">110 EGP</span></div>
@@ -149,6 +146,7 @@
     const textSlot = document.getElementById('text-slot');
     let charIndex = 0;
 
+    // دالة كتابة الاسم
     function startTyping() {
         if (charIndex < brandName.length) {
             textSlot.textContent += brandName.charAt(charIndex);
@@ -156,19 +154,23 @@
             setTimeout(startTyping, 150);
         } else {
             textSlot.classList.add('glow-text');
-            setTimeout(() => {
-                document.getElementById('intro-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('intro-screen').style.display = 'none';
-                    // تظهر الصيانة الإجبارية بعد 2 ثانية
-                    setTimeout(() => {
-                        document.getElementById('maintenance-overlay').style.display = 'flex';
-                    }, 2000);
-                }, 1000);
-            }, 1500);
         }
     }
-    window.onload = startTyping;
+
+    window.onload = () => {
+        startTyping();
+        
+        // التعديل المطلوب: ظهور رسالة الصيانة بعد 2 ثانية (2000 مللي ثانية) من فتح الموقع
+        setTimeout(() => {
+            // إخفاء الانترو أولاً بسلاسة
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-screen').style.display = 'none';
+                // إظهار ستارة الصيانة فوراً
+                document.getElementById('maintenance-overlay').style.display = 'flex';
+            }, 800);
+        }, 2000); 
+    };
 
     function toggleSections() {
         const game = document.getElementById('game_select').value;
@@ -179,4 +181,3 @@
 
 </body>
 </html>
-
