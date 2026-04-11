@@ -3,170 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE | وضع الصيانة الذكي</title>
+    <title>ZAIN STORE | العصر الذهبي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00f2ff;
-            --secondary: #ff4500;
             --gold: #f1c40f;
-            --bg-dark: #010614;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --border: rgba(0, 242, 255, 0.2);
+            --bg-dark: #000205;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(0, 242, 255, 0.15);
+            --danger: #ff3e3e;
         }
 
-        body {
-            margin: 0; padding: 0; background: var(--bg-dark);
-            font-family: 'Cairo', sans-serif; color: white;
-            background-image: radial-gradient(circle at top right, #0a1631 0%, #010614 100%);
-            overflow-x: hidden;
-        }
+        body { margin: 0; padding: 0; background: var(--bg-dark); font-family: 'Cairo', sans-serif; color: white; overflow-x: hidden; }
+        body.locked { overflow: hidden; }
 
-        /* --- شاشة الانترو (كتابة الاسم حرف حرف) --- */
-        #intro-screen {
-            position: fixed; width: 100%; height: 100%; top: 0; left: 0;
-            background: #000; z-index: 100000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: 0.8s ease-in-out;
-        }
-        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 8vw, 60px); font-weight: 900; }
-        #cursor { display: inline-block; width: 3px; background-color: var(--primary); margin-right: 5px; animation: blink 0.7s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .glow-text { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); transition: 0.5s; }
+        /* تنبيه زين الفخم */
+        .zain-alert { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
+        .zain-alert-card { background: #080808; border: 2px solid var(--gold); padding: 30px; border-radius: 25px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 0 40px rgba(241, 196, 15, 0.3); animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* --- ستارة الصيانة التفاعلية --- */
-        #maintenance-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 6, 20, 0.98); z-index: 90000;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            backdrop-filter: blur(25px);
-        }
-        .m-card {
-            background: rgba(255, 255, 255, 0.03); padding: 35px; border-radius: 40px;
-            border: 2px solid var(--secondary); text-align: center; width: 85%; max-width: 450px;
-            box-shadow: 0 0 50px rgba(255, 69, 0, 0.2);
-            animation: maintenanceFade 0.5s ease-out;
-        }
-        @keyframes maintenanceFade { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        /* شاشة الدخول */
+        #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px; }
+        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(35px, 8vw, 65px); font-weight: 900; min-height: 80px; color: white; }
+        .neon-active { animation: neonCycle 2s infinite; }
+        @keyframes neonCycle { 0%, 100% { text-shadow: 0 0 20px #00f2ff; color: #00f2ff; } 50% { text-shadow: 0 0 20px #f1c40f; color: #f1c40f; } }
+        #cert-text { font-size: clamp(15px, 4vw, 18px); color: #aaa; max-width: 700px; line-height: 1.8; margin-top: 15px; }
+        #enter-btn { margin-top: 40px; padding: 15px 45px; background: none; border: 1px solid var(--gold); color: var(--gold); border-radius: 50px; cursor: pointer; display: none; font-weight: 900; font-family: 'Cairo'; transition: 0.4s; }
 
-        /* البحث السري */
-        .search-area { margin-top: 25px; }
-        .search-area input {
-            width: 100%; padding: 15px; border-radius: 15px; border: 1px solid var(--primary);
-            background: rgba(0,0,0,0.6); color: white; text-align: center; font-family: 'Cairo';
-            font-size: 16px; transition: 0.3s;
-        }
-        .search-area input:focus { border-color: var(--gold); box-shadow: 0 0 15px var(--gold); outline: none; }
+        .top-warning-bar { background: rgba(0, 0, 0, 0.8); color: white; padding: 15px 0; font-size: 19px; font-weight: 900; position: sticky; top: 0; z-index: 5000; border-bottom: 2px solid var(--border); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .highlight-gold { color: var(--gold); font-weight: 900; text-shadow: 0 0 10px var(--gold); }
+        
+        /* الأزرار العائمة */
+        .go-to-p2 { position: fixed; bottom: 90px; right: 20px; z-index: 4000; background: rgba(0,0,0,0.9); border: 2px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 900; font-size: 13px; display: none; align-items: center; gap: 8px; animation: pulse-gold 2s infinite; }
+        .support-float { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #000; border: 2px solid var(--primary); padding: 12px 35px; border-radius: 50px; text-align: center; z-index: 4000; cursor: pointer; display: none; animation: pulse-blue 2.5s infinite; }
+        @keyframes pulse-gold { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 20px var(--gold); } }
+        @keyframes pulse-blue { 0%, 100% { box-shadow: 0 0 10px var(--primary); } 50% { box-shadow: 0 0 25px var(--primary); } }
 
-        #hidden-games {
-            display: none; margin-top: 20px; background: rgba(0, 242, 255, 0.05);
-            border: 1px dashed var(--gold); border-radius: 15px; padding: 15px;
-            animation: slideDown 0.4s ease forwards;
-        }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .game-tag { color: var(--gold); font-weight: 900; margin: 8px 0; font-size: 18px; display: block; }
+        #main-site { display: none; }
+        nav { background: rgba(0, 2, 5, 0.95); padding: 15px 5%; border-bottom: 1px solid var(--border); }
+        .nav-logo { font-family: 'Orbitron', sans-serif; color: var(--gold); font-weight: 900; font-size: 24px; text-align: center; }
+        .container { padding: 20px; max-width: 850px; margin: 0 auto; padding-bottom: 180px; }
+        .order-form { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 25px; border-radius: 20px; margin-bottom: 25px; }
+        input, select { width: 100%; padding: 15px; border-radius: 12px; background: #01040a; color: white; border: 1px solid #222; margin-bottom: 15px; font-family: 'Cairo'; }
+        
+        .price-section { display: none; }
+        .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px; }
+        .price-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 18px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .price-card.active { border-color: var(--primary); background: rgba(0, 242, 255, 0.15); box-shadow: 0 0 15px var(--primary); }
+        .confirm-btn { width: 100%; padding: 20px; background: linear-gradient(45deg, var(--primary), #0066ff); border: none; border-radius: 18px; font-weight: 900; font-size: 18px; cursor: pointer; }
 
-        /* --- محتوى الموقع (محمي ومخفي) --- */
-        nav { background: rgba(1, 6, 20, 0.95); padding: 20px 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
-        .container { padding: 20px; max-width: 800px; margin: 0 auto; }
-        .price-section { margin-top: 40px; display: none; }
-        .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 18px; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        .val { color: var(--gold); font-weight: 900; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: #050505; border: 2px solid var(--gold); padding: 30px; border-radius: 30px; text-align: center; width: 100%; max-width: 380px; }
+        .support-btn { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid var(--primary); color: var(--primary); border-radius: 12px; display: block; text-decoration: none; font-weight: 900; }
+        
+        .password-input-gold { background: #000; border: 1px solid var(--gold); color: var(--gold); text-align: center; font-size: 20px; letter-spacing: 5px; margin-top: 15px; width: 80%; border-radius: 10px; padding: 10px; }
+        .lucky-text { color: var(--gold); font-size: 20px; font-weight: 900; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     </style>
 </head>
-<body>
+<body class="locked">
 
-<div id="intro-screen">
-    <div class="typing-container"><span id="text-slot"></span><span id="cursor">|</span></div>
+<div id="password-modal" class="modal">
+    <div class="modal-card">
+        <h1 style="font-size:40px">🔐</h1>
+        <h3 style="color:var(--gold)">منطقة المحظوظين</h3>
+        <p style="color:#ccc; font-size:14px">أدخل كلمة السر لاستلام الهدية فوراً</p>
+        <input type="password" id="gift-pass-input" class="password-input-gold" placeholder="••••">
+        <button onclick="verifyGiftPassword()" style="width:100%; padding:15px; background:var(--gold); color:black; border:none; border-radius:12px; font-weight:900; margin-top:15px; cursor:pointer;">تأكيد ✅</button>
+        <button onclick="closePasswordModal()" style="background:none; border:none; color:#555; margin-top:10px; cursor:pointer;">إلغاء</button>
+    </div>
 </div>
 
-<div id="maintenance-overlay">
-    <div class="m-card">
-        <h1 style="font-size: 45px; margin: 0;">🛠️</h1>
-        <h2 style="color: white; margin: 10px 0;">الموقع في وضع الصيانة</h2>
-        <p style="opacity: 0.8; font-size: 14px; color: #eee;">نعمل على تحديث الأسعار وإضافة ألعاب جديدة لـ ZAIN STORE.</p>
-        
-        <div class="search-area">
-            <p style="font-size: 12px; color: var(--primary); margin-bottom: 10px;">لمعرفة الألعاب المتاحة حالياً، اكتب كلمة (العاب) في البحث</p>
-            <input type="text" id="game-search" placeholder="اكتب هنا..." oninput="showGames(this.value)">
-            
-            <div id="hidden-games">
-                <span style="font-size: 12px; color: #fff; opacity: 0.6;">🎮 الألعاب المدعومة حالياً:</span>
-                <span class="game-tag">ببجي موبايل - PUBG</span>
-                <span class="game-tag">فري فاير - FREE FIRE</span>
-                <p style="font-size: 11px; color: var(--secondary); margin-top: 10px;">⚠️ سيتم فتح الشحن فور انتهاء التحديثات</p>
+<div id="zain-alert-overlay" class="zain-alert">
+    <div class="zain-alert-card">
+        <div id="alert-icon" style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
+        <h3 id="alert-title" style="color: var(--gold); margin-bottom: 10px;">تنبيه يا بطل</h3>
+        <p id="alert-msg" style="color: #ccc; line-height: 1.6; margin-bottom: 20px;"></p>
+        <button onclick="closeZainAlert()" style="background: var(--gold); color: #000; border: none; padding: 10px 30px; border-radius: 10px; font-weight: 900; cursor: pointer;">تمام ✅</button>
+    </div>
+</div>
+
+<div id="intro-screen">
+    <div class="typing-container" id="name-box"></div>
+    <div id="cert-text"></div>
+    <button id="enter-btn" onclick="finishIntro()">استكشف عالم الشحن 🏆</button>
+</div>
+
+<div id="floating-p2" class="go-to-p2" onclick="document.getElementById('page2-overlay').style.display='flex'">
+    <span>الصفحة التانية 🚀</span>
+</div>
+
+<div id="support-float" class="support-float" onclick="document.getElementById('support-modal').style.display='flex'">
+    <div style="color:var(--primary); font-weight:900; font-size:14px;">الدعم الفني 🛡️</div>
+</div>
+
+<div id="main-site">
+    <div class="top-warning-bar">
+        <span>رقم الكاش: <span class="highlight-gold">01021431977</span></span>
+    </div>
+    <nav><div class="nav-logo">ZAIN STORE</div></nav>
+    <div class="container">
+        <div class="order-form">
+            <select id="game_select" onchange="toggleSections()">
+                <option value="" disabled selected>-- اختر اللعبة --</option>
+                <option value="pubg">ببجي موبايل - PUBG UC</option>
+                <option value="ff">فري فاير - FREE FIRE</option>
+                <option value="cod">كول اوف ديوتي - COD CP</option>
+            </select>
+            <input type="number" id="player_id" placeholder="أدخل ID اللاعب">
+            <input type="number" id="sender_number" placeholder="رقم المحفظة المحول منها">
+        </div>
+
+        <div id="pubg_section" class="price-section">
+            <h3 style="color:var(--gold)">ببجي موبايل 🔫</h3>
+            <div class="price-grid" id="pubg-list"></div>
+        </div>
+
+        <div id="ff_section" class="price-section">
+            <h3 style="color:var(--gold)">فري فاير 💎</h3>
+            <div class="price-grid">
+                <div class="price-card" onclick="selectItem(this, '50 جوهرة - 30 EGP')">50💎<br><small style="color:var(--gold)">30 EGP</small></div>
+                <div class="price-card" id="ff_gift" style="border:2px solid var(--gold)" onclick="selectItem(this, '100 جوهرة - مجاناً')">100💎<br><small style="color:#25d366">ببلاش (لأول شخص) 🔥</small></div>
+                <div id="ff-list" style="display:contents"></div>
             </div>
         </div>
 
-        <a href="https://wa.me/201021431977" style="display: block; margin-top: 30px; color: #25d366; text-decoration: none; font-weight: bold; font-size: 14px; border: 1px solid #25d366; padding: 10px; border-radius: 10px;">الدعم الفني (WhatsApp) 💬</a>
+        <div id="cod_section" class="price-section">
+            <h3 style="color:var(--gold)">كول اوف ديوتي 🎖️</h3>
+            <div class="price-grid" id="cod-list"></div>
+        </div>
+
+        <button class="confirm-btn" style="margin-top:40px" onclick="openConfirm()">تأكيد الطلب ✅</button>
     </div>
 </div>
 
-<nav>
-    <div style="font-family:'Orbitron'; color:var(--gold); font-weight:900; font-size:20px;">ZAIN STORE</div>
-    <div style="background:var(--primary); color:black; font-size:10px; padding:3px 8px; border-radius:5px; font-weight:900;">OFFICIAL 🛡️</div>
-</nav>
-
-<div class="container" style="opacity: 0.1; pointer-events: none;">
-    <div id="pubg_section" class="price-section">
-        <div class="price-card"><span>60 UC</span> <span class="val">50 EGP</span></div>
-        <div class="price-card"><span>325 UC</span> <span class="val">230 EGP</span></div>
-        <div class="price-card"><span>660 UC</span> <span class="val">430 EGP</span></div>
-        <div class="price-card"><span>1800 UC</span> <span class="val">1135 EGP</span></div>
-        <div class="price-card"><span>3850 UC</span> <span class="val">3010 EGP</span></div>
-        <div class="price-card"><span>8100 UC</span> <span class="val">4150 EGP</span></div>
-        <div class="price-card"><span>16200 UC</span> <span class="val">8450 EGP</span></div>
-        <div class="price-card"><span>81000 UC</span> <span class="val">43000 EGP</span></div>
+<div id="support-modal" class="modal">
+    <div class="modal-card">
+        <h2 style="color:white">تواصل مع الدعم</h2>
+        <a href="https://wa.me/201021431977" class="support-btn">رقم زين الأول (010) 👑</a>
+        <a href="https://wa.me/201210233693" class="support-btn" style="color:var(--gold); border-color:var(--gold);">رقم زين الثاني (012) 🏆</a>
+        <button onclick="document.getElementById('support-modal').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">إغلاق</button>
     </div>
-    <div id="ff_section" class="price-section">
-        <div class="price-card"><span>100 + 10</span> <span class="val">55 EGP</span></div>
-        <div class="price-card"><span>210 + 21</span> <span class="val">110 EGP</span></div>
-        <div class="price-card"><span>530 + 53</span> <span class="val">255 EGP</span></div>
-        <div class="price-card"><span>1080 + 108</span> <span class="val">510 EGP</span></div>
-        <div class="price-card"><span>2200 + 220</span> <span class="val">1100 EGP</span></div>
-        <div class="price-card"><span>11000 + 1100</span> <span class="val">5500 EGP</span></div>
+</div>
+
+<div id="page2-overlay" class="modal">
+    <div class="modal-card">
+        <h1 style="font-size:60px">💎</h1>
+        <h2 style="color:white">منطقة الملوك</h2>
+        <p style="color:#aaa">العروض القادمة ستكون هنا..</p>
+        <button onclick="document.getElementById('page2-overlay').style.display='none'" style="background:var(--gold); color:black; padding:12px 30px; border:none; border-radius:10px; font-weight:900; margin-top:20px;">رجوع</button>
+    </div>
+</div>
+
+<div id="confirm-modal" class="modal">
+    <div class="modal-card">
+        <div id="cash-area" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 20px;"></div>
+        <div id="summary" style="text-align:right; margin-bottom:20px; color:#ccc; border-right:3px solid var(--primary); padding-right:15px;"></div>
+        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--primary); border:none; border-radius:12px; font-weight:900; cursor:pointer;">إرسال للواتساب 🚀</button>
+        <button onclick="document.getElementById('confirm-modal').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">إلغاء</button>
     </div>
 </div>
 
 <script>
-    const brandName = "ZAIN STORE";
-    const textSlot = document.getElementById('text-slot');
-    let charIndex = 0;
+    let selPack = "";
+    const nameText = "ZAIN STORE";
+    const GIFT_PASSWORD = "ZAIN100";
 
-    // 1. انترو الكتابة
-    function startTyping() {
-        if (charIndex < brandName.length) {
-            textSlot.textContent += brandName.charAt(charIndex);
-            charIndex++;
-            setTimeout(startTyping, 150);
+    function showZainAlert(msg, icon = "⚠️") {
+        document.getElementById('alert-msg').innerText = msg;
+        document.getElementById('alert-icon').innerText = icon;
+        document.getElementById('zain-alert-overlay').style.display = 'flex';
+    }
+    function closeZainAlert() { document.getElementById('zain-alert-overlay').style.display = 'none'; }
+
+    function startIntro() {
+        let i = 0;
+        const nameBox = document.getElementById('name-box');
+        function type() {
+            if(i < nameText.length) { nameBox.innerHTML += nameText.charAt(i); i++; setTimeout(type, 110); }
+            else { nameBox.classList.add('neon-active'); showCert(); }
+        }
+        function showCert() { document.getElementById('cert-text').innerHTML = "مرحباً بك في المنصة الأرقى لخدمات الألعاب الرقمية."; document.getElementById('enter-btn').style.display = 'block'; }
+        type();
+    }
+
+    function finishIntro() {
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('main-site').style.display = 'block';
+        document.getElementById('floating-p2').style.display = 'flex';
+        document.getElementById('support-float').style.display = 'block';
+        document.body.classList.remove('locked');
+    }
+
+    const pubg = ["30 UC - 25 EGP", "60 UC - 50 EGP", "325 UC - 230 EGP", "660 UC - 430 EGP", "1800 UC - 1135 EGP", "3850 UC - 3010 EGP", "8100 UC - 4150 EGP", "16200 UC - 8450 EGP", "24300 UC - 13000 EGP", "32400 UC - 17000 EGP", "40500 UC - 21700 EGP", "48600 UC - 25400 EGP", "81000 UC - 43000 EGP"];
+    const ff = ["231💎 - 110 EGP", "341💎 - 155 EGP", "583💎 - 255 EGP", "1188💎 - 510 EGP", "2420💎 - 1100 EGP", "4840💎 - 2200 EGP", "12100💎 - 5500 EGP"];
+    const cod = ["88 CP - 55 EGP", "460 CP - 205 EGP", "960 CP - 405 EGP", "2600 CP - 1010 EGP", "5400 CP - 2015 EGP", "11600 CP - 5015 EGP", "23200 CP - 9800 EGP", "34800 CP - 14550 EGP", "58000 CP - 23600 EGP"];
+
+    function fill(arr, id) { arr.forEach(p => document.getElementById(id).innerHTML += `<div class="price-card" onclick="selectItem(this, '${p}')">${p.replace(' - ', '<br><small style="color:var(--gold)">')} </small></div>`); }
+    
+    window.onload = () => { startIntro(); fill(pubg, 'pubg-list'); fill(ff, 'ff-list'); fill(cod, 'cod-list'); };
+
+    function toggleSections() { 
+        const g = document.getElementById('game_select').value; 
+        document.querySelectorAll('.price-section').forEach(s => s.style.display='none'); 
+        document.getElementById(g+'_section').style.display='block'; 
+        selPack=""; 
+    }
+
+    function selectItem(el, v) { 
+        document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active')); 
+        el.classList.add('active'); 
+        selPack=v; 
+        if(v.includes("مجاناً")) {
+            document.getElementById('sender_number').style.display = 'none';
         } else {
-            textSlot.classList.add('glow-text');
+            document.getElementById('sender_number').style.display = 'block';
         }
     }
 
-    // 2. تفعيل التوقيت (بعد لحظتين)
-    window.onload = () => {
-        startTyping();
-        
-        // التعديل المطلوب: بعد ثانيتين (لحظتين) تظهر الصيانة
-        setTimeout(() => {
-            document.getElementById('intro-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro-screen').style.display = 'none';
-                document.getElementById('maintenance-overlay').style.display = 'flex';
-            }, 800);
-        }, 2000); 
-    };
+    function openConfirm() {
+        const id = document.getElementById('player_id').value;
+        const num = document.getElementById('sender_number').value;
+        const game = document.getElementById('game_select').value;
+        const phoneRegex = /^(010|011|012|015)[0-9]{8}$/;
 
-    // 3. نظام البحث السري
-    function showGames(val) {
-        const result = document.getElementById('hidden-games');
-        if(val === "العاب") {
-            result.style.display = 'block';
-        } else {
-            result.style.display = 'none';
+        if(!game) return showZainAlert("اختر اللعبه الاول يابطل 🎮");
+        if(!id) return showZainAlert("فين الاي دي يروحي 🧐");
+        if(!selPack) return showZainAlert("حدد الكمية اللي عاوز تشحنها 💎");
+
+        if(!selPack.includes("مجاناً")) {
+            if(!num) return showZainAlert("فين رقم المحفظة اللي حولت منه؟ 😂");
+            if(!phoneRegex.test(num)) return showZainAlert("الرقم مش مظبوط.. اتأكد إنه 11 رقم مصري ❌");
         }
+
+        if(selPack.includes("مجاناً")) {
+            document.getElementById('password-modal').style.display = 'flex';
+        } else {
+            showFinalConfirm();
+        }
+    }
+
+    function verifyGiftPassword() {
+        if(document.getElementById('gift-pass-input').value === GIFT_PASSWORD) {
+            document.getElementById('password-modal').style.display = 'none';
+            showFinalConfirm();
+        } else {
+            showZainAlert("كلمة السر غلط! الهدية دي لشخص محدد 😢");
+        }
+    }
+
+    function closePasswordModal() { document.getElementById('password-modal').style.display = 'none'; }
+
+    function showFinalConfirm() {
+        const id = document.getElementById('player_id').value;
+        const num = document.getElementById('sender_number').value;
+        const game = document.getElementById('game_select').value;
+        const cashArea = document.getElementById('cash-area');
+        
+        if(selPack.includes("مجاناً")) {
+            cashArea.innerHTML = `<div class="lucky-text">مبروك! الهدية بتاعتك يا بطل 🎁✅</div>`;
+            document.getElementById('summary').innerHTML = `<p>🎮 اللعبة: ${game.toUpperCase()}</p><p>💎 الكمية: ${selPack.split(' - ')[0]}</p><p>🆔 الآي دي: ${id}</p><p>🎁 الحالة: هدية مجانية</p>`;
+        } else {
+            cashArea.innerHTML = `<span style="color:white; font-weight:900; font-size:22px;" class="highlight-gold">01021431977</span>`;
+            document.getElementById('summary').innerHTML = `<p>🎮 اللعبة: ${game.toUpperCase()}</p><p>💎 الكمية: ${selPack.split(' - ')[0]}</p><p>🆔 الآي دي: ${id}</p><p>📞 الرقم: ${num}</p>`;
+        }
+        document.getElementById('confirm-modal').style.display='flex';
+    }
+
+    function sendOrder() {
+        const id = document.getElementById('player_id').value;
+        const num = document.getElementById('sender_number').value || "طلب هدية مجانية";
+        const game = document.getElementById('game_select').value;
+        const text = `👑 طلب شحن من ZAIN STORE%0A🎮 اللعبة: ${game.toUpperCase()}%0A💎 الكمية: ${selPack}%0A🆔 الآي دي: ${id}%0A📞 من رقم: ${num}`;
+        window.location.href = `https://wa.me/201021431977?text=${text}`;
     }
 </script>
-
 </body>
 </html>
+
