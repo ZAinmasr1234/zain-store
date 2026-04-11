@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE | المنصة العالمية المعتمدة</title>
+    <title>ZAIN STORE | وضع الصيانة الذكي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -22,49 +22,55 @@
             overflow-x: hidden;
         }
 
-        /* --- شاشة الانترو (كتابة الاسم) --- */
+        /* --- شاشة الانترو (كتابة الاسم حرف حرف) --- */
         #intro-screen {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0;
             background: #000; z-index: 100000; display: flex; flex-direction: column;
             justify-content: center; align-items: center; transition: 0.8s ease-in-out;
         }
-
-        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 8vw, 60px); font-weight: 900; color: white; }
+        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(30px, 8vw, 60px); font-weight: 900; }
         #cursor { display: inline-block; width: 3px; background-color: var(--primary); margin-right: 5px; animation: blink 0.7s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .glow-text { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); }
+        .glow-text { text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); transition: 0.5s; }
 
-        /* --- شاشة الصيانة الإجبارية (التي تظهر بعد 2 ثانية) --- */
+        /* --- ستارة الصيانة التفاعلية --- */
         #maintenance-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 6, 20, 0.98); z-index: 110000;
+            background: rgba(1, 6, 20, 0.98); z-index: 90000;
             display: none; flex-direction: column; justify-content: center; align-items: center;
             backdrop-filter: blur(25px);
         }
         .m-card {
-            background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 40px;
-            border: 2px solid var(--secondary); text-align: center; width: 85%; max-width: 500px;
-            box-shadow: 0 0 50px rgba(255, 69, 0, 0.3);
-            animation: pulse 2s infinite ease-in-out;
+            background: rgba(255, 255, 255, 0.03); padding: 35px; border-radius: 40px;
+            border: 2px solid var(--secondary); text-align: center; width: 85%; max-width: 450px;
+            box-shadow: 0 0 50px rgba(255, 69, 0, 0.2);
+            animation: maintenanceFade 0.5s ease-out;
         }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        @keyframes maintenanceFade { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- محتوى الموقع (كامل ومحمي) --- */
-        nav { background: rgba(1, 6, 20, 0.95); padding: 20px 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--gold); }
+        /* البحث السري */
+        .search-area { margin-top: 25px; }
+        .search-area input {
+            width: 100%; padding: 15px; border-radius: 15px; border: 1px solid var(--primary);
+            background: rgba(0,0,0,0.6); color: white; text-align: center; font-family: 'Cairo';
+            font-size: 16px; transition: 0.3s;
+        }
+        .search-area input:focus { border-color: var(--gold); box-shadow: 0 0 15px var(--gold); outline: none; }
+
+        #hidden-games {
+            display: none; margin-top: 20px; background: rgba(0, 242, 255, 0.05);
+            border: 1px dashed var(--gold); border-radius: 15px; padding: 15px;
+            animation: slideDown 0.4s ease forwards;
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .game-tag { color: var(--gold); font-weight: 900; margin: 8px 0; font-size: 18px; display: block; }
+
+        /* --- محتوى الموقع (محمي ومخفي) --- */
+        nav { background: rgba(1, 6, 20, 0.95); padding: 20px 5%; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
         .container { padding: 20px; max-width: 800px; margin: 0 auto; }
-        .order-form { background: rgba(255,255,255,0.02); border: 1px solid var(--gold); padding: 25px; border-radius: 25px; margin-top: 10px; }
-        .input-group { margin-bottom: 20px; text-align: right; }
-        .input-group label { display: block; margin-bottom: 10px; color: var(--primary); font-weight: bold; }
-        input, select { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border); background: #050e21; color: white; font-family: 'Cairo'; box-sizing: border-box; }
-        
         .price-section { margin-top: 40px; display: none; }
-        .price-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 18px; display: flex; justify-content: space-between; align-items: center; }
-        .val { color: var(--gold); font-weight: 900; font-family: 'Orbitron'; }
-
-        .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .support-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; color: white; font-weight: bold; }
+        .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; padding: 18px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .val { color: var(--gold); font-weight: 900; }
     </style>
 </head>
 <body>
@@ -75,69 +81,49 @@
 
 <div id="maintenance-overlay">
     <div class="m-card">
-        <h1 style="font-size: 50px; margin: 0;">⚠️</h1>
-        <h2 style="color: white; margin: 15px 0;">عفواً! الموقع تحت الصيانة</h2>
-        <p style="color: var(--gold); font-weight: bold;">يتم الآن تحديث السيرفرات والأسعار</p>
-        <p style="opacity: 0.7; font-size: 14px; line-height: 1.6;">نعتذر عن استقبال أي طلبات حالياً، الموقع سيعود للعمل بشكل أقوى خلال ساعات قليلة.</p>
-        <div style="height: 2px; background: linear-gradient(90deg, transparent, var(--secondary), transparent); margin: 20px 0;"></div>
-        <a href="https://wa.me/201021431977" style="display: block; color: #25d366; text-decoration: none; font-weight: 900; font-size: 18px;">تواصل مباشر (WhatsApp) 💬</a>
+        <h1 style="font-size: 45px; margin: 0;">🛠️</h1>
+        <h2 style="color: white; margin: 10px 0;">الموقع في وضع الصيانة</h2>
+        <p style="opacity: 0.8; font-size: 14px; color: #eee;">نعمل على تحديث الأسعار وإضافة ألعاب جديدة لـ ZAIN STORE.</p>
+        
+        <div class="search-area">
+            <p style="font-size: 12px; color: var(--primary); margin-bottom: 10px;">لمعرفة الألعاب المتاحة حالياً، اكتب كلمة (العاب) في البحث</p>
+            <input type="text" id="game-search" placeholder="اكتب هنا..." oninput="showGames(this.value)">
+            
+            <div id="hidden-games">
+                <span style="font-size: 12px; color: #fff; opacity: 0.6;">🎮 الألعاب المدعومة حالياً:</span>
+                <span class="game-tag">ببجي موبايل - PUBG</span>
+                <span class="game-tag">فري فاير - FREE FIRE</span>
+                <p style="font-size: 11px; color: var(--secondary); margin-top: 10px;">⚠️ سيتم فتح الشحن فور انتهاء التحديثات</p>
+            </div>
+        </div>
+
+        <a href="https://wa.me/201021431977" style="display: block; margin-top: 30px; color: #25d366; text-decoration: none; font-weight: bold; font-size: 14px; border: 1px solid #25d366; padding: 10px; border-radius: 10px;">الدعم الفني (WhatsApp) 💬</a>
     </div>
 </div>
 
 <nav>
-    <div class="nav-logo">ZAIN STORE</div>
+    <div style="font-family:'Orbitron'; color:var(--gold); font-weight:900; font-size:20px;">ZAIN STORE</div>
     <div style="background:var(--primary); color:black; font-size:10px; padding:3px 8px; border-radius:5px; font-weight:900;">OFFICIAL 🛡️</div>
 </nav>
 
-<div class="container">
-    <div class="order-form">
-        <div class="input-group">
-            <label>اختر اللعبة</label>
-            <select id="game_select" onchange="toggleSections()">
-                <option value="" disabled selected>-- اختر اللعبة --</option>
-                <option value="pubg">ببجي موبايل - PUBG</option>
-                <option value="ff">فري فاير - FREE FIRE</option>
-            </select>
-        </div>
-        <div class="input-group"><label>آي دي اللاعب (ID)</label><input type="number" id="player_id"></div>
-        <div class="input-group"><label>رقم المحفظة الذي تم التحويل منه</label><input type="number" id="sender_number"></div>
-    </div>
-
+<div class="container" style="opacity: 0.1; pointer-events: none;">
     <div id="pubg_section" class="price-section">
-        <h3 style="color:var(--gold)">PUBG MOBILE PACKS</h3>
-        <div class="price-grid">
-            <div class="price-card"><span>60 UC</span> <span class="val">50 EGP</span></div>
-            <div class="price-card"><span>325 UC</span> <span class="val">230 EGP</span></div>
-            <div class="price-card"><span>660 UC</span> <span class="val">430 EGP</span></div>
-            <div class="price-card"><span>1800 UC</span> <span class="val">1135 EGP</span></div>
-            <div class="price-card"><span>3850 UC</span> <span class="val">3010 EGP</span></div>
-            <div class="price-card"><span>8100 UC 👑</span> <span class="val">4150 EGP</span></div>
-            <div class="price-card"><span>16200 UC</span> <span class="val">8450 EGP</span></div>
-            <div class="price-card"><span>24300 UC</span> <span class="val">12650 EGP</span></div>
-            <div class="price-card"><span>32400 UC</span> <span class="val">16850 EGP</span></div>
-            <div class="price-card"><span>40500 UC</span> <span class="val">21200 EGP</span></div>
-            <div class="price-card"><span>48600 UC</span> <span class="val">25350 EGP</span></div>
-            <div class="price-card"><span>81000 UC 🚀</span> <span class="val">43000 EGP</span></div>
-        </div>
+        <div class="price-card"><span>60 UC</span> <span class="val">50 EGP</span></div>
+        <div class="price-card"><span>325 UC</span> <span class="val">230 EGP</span></div>
+        <div class="price-card"><span>660 UC</span> <span class="val">430 EGP</span></div>
+        <div class="price-card"><span>1800 UC</span> <span class="val">1135 EGP</span></div>
+        <div class="price-card"><span>3850 UC</span> <span class="val">3010 EGP</span></div>
+        <div class="price-card"><span>8100 UC</span> <span class="val">4150 EGP</span></div>
+        <div class="price-card"><span>16200 UC</span> <span class="val">8450 EGP</span></div>
+        <div class="price-card"><span>81000 UC</span> <span class="val">43000 EGP</span></div>
     </div>
-
     <div id="ff_section" class="price-section">
-        <h3 style="color:var(--secondary)">FREE FIRE DIAMONDS</h3>
-        <div class="price-grid">
-            <div class="price-card"><span>100 + 10</span> <span class="val">55 EGP</span></div>
-            <div class="price-card"><span>210 + 21</span> <span class="val">110 EGP</span></div>
-            <div class="price-card"><span>310 + 31</span> <span class="val">155 EGP</span></div>
-            <div class="price-card"><span>530 + 53</span> <span class="val">255 EGP</span></div>
-            <div class="price-card"><span>1080 + 108</span> <span class="val">510 EGP</span></div>
-            <div class="price-card"><span>2200 + 220</span> <span class="val">1100 EGP</span></div>
-            <div class="price-card"><span>4400 + 440</span> <span class="val">2200 EGP</span></div>
-            <div class="price-card"><span>11000 + 1100</span> <span class="val">5500 EGP</span></div>
-        </div>
-    </div>
-
-    <div class="support-grid">
-        <a href="https://wa.me/201021431977" class="support-btn" style="background:#25d366">واتســاب</a>
-        <a href="https://wa.me/201021431977" class="support-btn" style="background:#0088cc">فولتكس</a>
+        <div class="price-card"><span>100 + 10</span> <span class="val">55 EGP</span></div>
+        <div class="price-card"><span>210 + 21</span> <span class="val">110 EGP</span></div>
+        <div class="price-card"><span>530 + 53</span> <span class="val">255 EGP</span></div>
+        <div class="price-card"><span>1080 + 108</span> <span class="val">510 EGP</span></div>
+        <div class="price-card"><span>2200 + 220</span> <span class="val">1100 EGP</span></div>
+        <div class="price-card"><span>11000 + 1100</span> <span class="val">5500 EGP</span></div>
     </div>
 </div>
 
@@ -146,7 +132,7 @@
     const textSlot = document.getElementById('text-slot');
     let charIndex = 0;
 
-    // دالة كتابة الاسم
+    // 1. انترو الكتابة
     function startTyping() {
         if (charIndex < brandName.length) {
             textSlot.textContent += brandName.charAt(charIndex);
@@ -157,25 +143,28 @@
         }
     }
 
+    // 2. تفعيل التوقيت (بعد لحظتين)
     window.onload = () => {
         startTyping();
         
-        // التعديل المطلوب: ظهور رسالة الصيانة بعد 2 ثانية (2000 مللي ثانية) من فتح الموقع
+        // التعديل المطلوب: بعد ثانيتين (لحظتين) تظهر الصيانة
         setTimeout(() => {
-            // إخفاء الانترو أولاً بسلاسة
             document.getElementById('intro-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('intro-screen').style.display = 'none';
-                // إظهار ستارة الصيانة فوراً
                 document.getElementById('maintenance-overlay').style.display = 'flex';
             }, 800);
         }, 2000); 
     };
 
-    function toggleSections() {
-        const game = document.getElementById('game_select').value;
-        document.getElementById('pubg_section').style.display = game === 'pubg' ? 'block' : 'none';
-        document.getElementById('ff_section').style.display = game === 'ff' ? 'block' : 'none';
+    // 3. نظام البحث السري
+    function showGames(val) {
+        const result = document.getElementById('hidden-games');
+        if(val === "العاب") {
+            result.style.display = 'block';
+        } else {
+            result.style.display = 'none';
+        }
     }
 </script>
 
