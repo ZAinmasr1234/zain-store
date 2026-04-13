@@ -1,235 +1,94 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE | العصر الذهبي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Destruction and Love</title>
     <style>
-        :root {
-            --primary: #00f2ff;
-            --gold: #f1c40f;
-            --bg-dark: #000205;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(0, 242, 255, 0.15);
-            --danger: #ff3e3e;
+        body {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: 'Arial', sans-serif;
         }
-
-        body { margin: 0; padding: 0; background: var(--bg-dark); font-family: 'Cairo', sans-serif; color: white; overflow-x: hidden; }
-        body.locked { overflow: hidden; }
-
-        .zain-alert { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
-        .zain-alert-card { background: #080808; border: 2px solid var(--gold); padding: 30px; border-radius: 25px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 0 40px rgba(241, 196, 15, 0.3); animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
-        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px; }
-        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(35px, 8vw, 65px); font-weight: 900; min-height: 80px; color: white; }
-        .neon-active { animation: neonCycle 2s infinite; }
-        @keyframes neonCycle { 0%, 100% { text-shadow: 0 0 20px #00f2ff; color: #00f2ff; } 50% { text-shadow: 0 0 20px #f1c40f; color: #f1c40f; } }
-        #cert-text { font-size: clamp(15px, 4vw, 18px); color: #aaa; max-width: 700px; line-height: 1.8; margin-top: 15px; }
-        #enter-btn { margin-top: 40px; padding: 15px 45px; background: none; border: 1px solid var(--gold); color: var(--gold); border-radius: 50px; cursor: pointer; display: none; font-weight: 900; font-family: 'Cairo'; transition: 0.4s; }
-
-        .top-warning-bar { background: rgba(0, 0, 0, 0.8); color: white; padding: 15px 0; font-size: 19px; font-weight: 900; position: sticky; top: 0; z-index: 5000; border-bottom: 2px solid var(--border); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .highlight-gold { color: var(--gold); font-weight: 900; text-shadow: 0 0 10px var(--gold); }
-        
-        .go-to-p2 { position: fixed; bottom: 90px; right: 20px; z-index: 4000; background: rgba(0,0,0,0.9); border: 2px solid var(--gold); color: var(--gold); padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 900; font-size: 13px; display: none; align-items: center; gap: 8px; animation: pulse-gold 2s infinite; }
-        .support-float { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #000; border: 2px solid var(--primary); padding: 12px 35px; border-radius: 50px; text-align: center; z-index: 4000; cursor: pointer; display: none; animation: pulse-blue 2.5s infinite; }
-        @keyframes pulse-gold { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 20px var(--gold); } }
-        @keyframes pulse-blue { 0%, 100% { box-shadow: 0 0 10px var(--primary); } 50% { box-shadow: 0 0 25px var(--primary); } }
-
-        #main-site { display: none; }
-        nav { background: rgba(0, 2, 5, 0.95); padding: 15px 5%; border-bottom: 1px solid var(--border); }
-        .nav-logo { font-family: 'Orbitron', sans-serif; color: var(--gold); font-weight: 900; font-size: 24px; text-align: center; }
-        .container { padding: 20px; max-width: 850px; margin: 0 auto; padding-bottom: 180px; }
-        .order-form { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 25px; border-radius: 20px; margin-bottom: 25px; }
-        input, select { width: 100%; padding: 15px; border-radius: 12px; background: #01040a; color: white; border: 1px solid #222; margin-bottom: 15px; font-family: 'Cairo'; }
-        
-        .price-section { display: none; }
-        .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px; }
-        .price-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 15px; padding: 18px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .price-card.active { border-color: var(--primary); background: rgba(0, 242, 255, 0.15); box-shadow: 0 0 15px var(--primary); }
-        .confirm-btn { width: 100%; padding: 20px; background: linear-gradient(45deg, var(--primary), #0066ff); border: none; border-radius: 18px; font-weight: 900; font-size: 18px; cursor: pointer; }
-
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
-        .modal-card { background: #050505; border: 2px solid var(--gold); padding: 30px; border-radius: 30px; text-align: center; width: 100%; max-width: 380px; }
-        .support-btn { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid var(--primary); color: var(--primary); border-radius: 12px; display: block; text-decoration: none; font-weight: 900; }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: pink;
+            transform: rotate(45deg);
+            animation: float 3s infinite;
+        }
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: pink;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translate(0); }
+            25% { transform: translate(-5px, 5px); }
+            50% { transform: translate(5px, -5px); }
+            75% { transform: translate(-5px, -5px); }
+        }
+        .explosion {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50%;
+            animation: explode 0.5s forwards;
+            pointer-events: none;
+        }
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+        .neon {
+            text-shadow: 0 0 5px #ff00cc, 0 0 10px #ff00cc, 0 0 20px #ff00cc, 0 0 40px #ff00cc;
+        }
     </style>
 </head>
-<body class="locked">
+<body>
+    <h1 class="neon">Everything is Beautifully Destroyed</h1>
+    <script>
+        document.addEventListener('mousemove', function(e) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = e.pageX + 'px';
+            heart.style.top = e.pageY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        });
 
-<div id="zain-alert-overlay" class="zain-alert">
-    <div class="zain-alert-card">
-        <div id="alert-icon" style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
-        <h3 id="alert-title" style="color: var(--gold); margin-bottom: 10px;">تنبيه يا بطل</h3>
-        <p id="alert-msg" style="color: #ccc; line-height: 1.6; margin-bottom: 20px;"></p>
-        <button onclick="closeZainAlert()" style="background: var(--gold); color: #000; border: none; padding: 10px 30px; border-radius: 10px; font-weight: 900; cursor: pointer;">تمام ✅</button>
-    </div>
-</div>
-
-<div id="intro-screen">
-    <div class="typing-container" id="name-box"></div>
-    <div id="cert-text"></div>
-    <button id="enter-btn" onclick="finishIntro()">استكشف عالم الشحن 🏆</button>
-</div>
-
-<div id="floating-p2" class="go-to-p2" onclick="document.getElementById('page2-overlay').style.display='flex'">
-    <span>الصفحة التانية 🚀</span>
-</div>
-
-<div id="support-float" class="support-float" onclick="document.getElementById('support-modal').style.display='flex'">
-    <div style="color:var(--primary); font-weight:900; font-size:14px;">الدعم الفني 🛡️</div>
-</div>
-
-<div id="main-site">
-    <div class="top-warning-bar">
-        <span>رقم الكاش: <span class="highlight-gold">01021431977</span></span>
-    </div>
-    <nav><div class="nav-logo">ZAIN STORE</div></nav>
-    <div class="container">
-        <div class="order-form">
-            <select id="game_select" onchange="toggleSections()">
-                <option value="" disabled selected>-- اختر اللعبة --</option>
-                <option value="pubg">ببجي موبايل - PUBG UC</option>
-                <option value="ff">فري فاير - FREE FIRE</option>
-                <option value="cod">كول اوف ديوتي - COD CP</option>
-            </select>
-            <input type="number" id="player_id" placeholder="أدخل ID اللاعب">
-            <input type="number" id="sender_number" placeholder="رقم المحفظة المحول منها">
-        </div>
-
-        <div id="pubg_section" class="price-section">
-            <h3 style="color:var(--gold)">ببجي موبايل 🔫</h3>
-            <div class="price-grid" id="pubg-list"></div>
-        </div>
-
-        <div id="ff_section" class="price-section">
-            <h3 style="color:var(--gold)">فري فاير 💎</h3>
-            <div class="price-grid">
-                <div class="price-card" onclick="selectItem(this, '100 جوهرة - 55 EGP')">100💎<br><small style="color:var(--gold)">55 EGP</small></div>
-                <div id="ff-list" style="display:contents"></div>
-            </div>
-        </div>
-
-        <div id="cod_section" class="price-section">
-            <h3 style="color:var(--gold)">كول اوف ديوتي 🎖️</h3>
-            <div class="price-grid" id="cod-list"></div>
-        </div>
-
-        <button class="confirm-btn" style="margin-top:40px" onclick="openConfirm()">تأكيد الطلب ✅</button>
-    </div>
-</div>
-
-<div id="support-modal" class="modal">
-    <div class="modal-card">
-        <h2 style="color:white">تواصل مع الدعم</h2>
-        <a href="https://wa.me/201021431977" class="support-btn">رقم زين الأول (010) 👑</a>
-        <a href="https://wa.me/201210233693" class="support-btn" style="color:var(--gold); border-color:var(--gold);">رقم زين الثاني (012) 🏆</a>
-        <button onclick="document.getElementById('support-modal').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">إغلاق</button>
-    </div>
-</div>
-
-<div id="page2-overlay" class="modal">
-    <div class="modal-card">
-        <h1 style="font-size:60px">💎</h1>
-        <h2 style="color:white">منطقة الملوك</h2>
-        <p style="color:#aaa">العروض القادمة ستكون هنا..</p>
-        <button onclick="document.getElementById('page2-overlay').style.display='none'" style="background:var(--gold); color:black; padding:12px 30px; border:none; border-radius:10px; font-weight:900; margin-top:20px;">رجوع</button>
-    </div>
-</div>
-
-<div id="confirm-modal" class="modal">
-    <div class="modal-card">
-        <div id="cash-area" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 20px;">
-             <span style="color:white; font-weight:900; font-size:22px;" class="highlight-gold">01021431977</span>
-        </div>
-        <div id="summary" style="text-align:right; margin-bottom:20px; color:#ccc; border-right:3px solid var(--primary); padding-right:15px;"></div>
-        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--primary); border:none; border-radius:12px; font-weight:900; cursor:pointer;">إرسال للواتساب 🚀</button>
-        <button onclick="document.getElementById('confirm-modal').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">إلغاء</button>
-    </div>
-</div>
-
-<script>
-    let selPack = "";
-    const nameText = "ZAIN STORE";
-
-    function showZainAlert(msg, icon = "⚠️") {
-        document.getElementById('alert-msg').innerText = msg;
-        document.getElementById('alert-icon').innerText = icon;
-        document.getElementById('zain-alert-overlay').style.display = 'flex';
-    }
-    function closeZainAlert() { document.getElementById('zain-alert-overlay').style.display = 'none'; }
-
-    function startIntro() {
-        let i = 0;
-        const nameBox = document.getElementById('name-box');
-        nameBox.innerHTML = ""; // التأكد من إفراغ الحاوية قبل البدء
-        function type() {
-            if(i < nameText.length) { nameBox.innerHTML += nameText.charAt(i); i++; setTimeout(type, 110); }
-            else { nameBox.classList.add('neon-active'); showCert(); }
-        }
-        function showCert() { document.getElementById('cert-text').innerHTML = "مرحباً بك في المنصة الأرقى لخدمات الألعاب الرقمية."; document.getElementById('enter-btn').style.display = 'block'; }
-        type();
-    }
-
-    function finishIntro() {
-        document.getElementById('intro-screen').style.display = 'none';
-        document.getElementById('main-site').style.display = 'block';
-        document.getElementById('floating-p2').style.display = 'flex';
-        document.getElementById('support-float').style.display = 'block';
-        document.body.classList.remove('locked');
-    }
-
-    const pubg = ["30 UC - 25 EGP", "60 UC - 50 EGP", "325 UC - 230 EGP", "660 UC - 430 EGP", "1800 UC - 1135 EGP", "3850 UC - 3010 EGP", "8100 UC - 4150 EGP", "16200 UC - 8450 EGP", "24300 UC - 13000 EGP", "32400 UC - 17000 EGP", "40500 UC - 21700 EGP", "48600 UC - 25400 EGP", "81000 UC - 43000 EGP"];
-    const ff = ["231💎 - 110 EGP", "341💎 - 155 EGP", "583💎 - 255 EGP", "1188💎 - 510 EGP", "2420💎 - 1100 EGP", "4840💎 - 2200 EGP", "12100💎 - 5500 EGP"];
-    const cod = ["88 CP - 55 EGP", "460 CP - 205 EGP", "960 CP - 405 EGP", "2600 CP - 1010 EGP", "5400 CP - 2015 EGP", "11600 CP - 5015 EGP", "23200 CP - 9800 EGP", "34800 CP - 14550 EGP", "58000 CP - 23600 EGP"];
-
-    function fill(arr, id) { arr.forEach(p => document.getElementById(id).innerHTML += `<div class="price-card" onclick="selectItem(this, '${p}')">${p.replace(' - ', '<br><small style="color:var(--gold)">')} </small></div>`); }
-    
-    // استخدام event listener بدلاً من window.onload لضمان التنفيذ
-    document.addEventListener("DOMContentLoaded", () => { 
-        startIntro(); 
-        fill(pubg, 'pubg-list'); 
-        fill(ff, 'ff-list'); 
-        fill(cod, 'cod-list'); 
-    });
-
-    function toggleSections() { 
-        const g = document.getElementById('game_select').value; 
-        document.querySelectorAll('.price-section').forEach(s => s.style.display='none'); 
-        document.getElementById(g+'_section').style.display='block'; 
-        selPack=""; 
-    }
-
-    function selectItem(el, v) { 
-        document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active')); 
-        el.classList.add('active'); 
-        selPack=v; 
-    }
-
-    function openConfirm() {
-        const id = document.getElementById('player_id').value;
-        const num = document.getElementById('sender_number').value;
-        const game = document.getElementById('game_select').value;
-        const phoneRegex = /^(010|011|012|015)[0-9]{8}$/;
-
-        if(!game) return showZainAlert("اختر اللعبه الاول يابطل 🎮");
-        if(!id) return showZainAlert("فين الاي دي يروحي 🧐");
-        if(!selPack) return showZainAlert("حدد الكمية اللي عاوز تشحنها 💎");
-        if(!num) return showZainAlert("فين رقم المحفظة اللي حولت منه؟ 😂");
-        if(!phoneRegex.test(num)) return showZainAlert("الرقم مش مظبوط.. اتأكد إنه 11 رقم مصري ❌");
-
-        document.getElementById('summary').innerHTML = `<p>🎮 اللعبة: ${game.toUpperCase()}</p><p>💎 الكمية: ${selPack.split(' - ')[0]}</p><p>🆔 الآي دي: ${id}</p><p>📞 الرقم: ${num}</p>`;
-        document.getElementById('confirm-modal').style.display='flex';
-    }
-
-    function sendOrder() {
-        const id = document.getElementById('player_id').value;
-        const num = document.getElementById('sender_number').value;
-        const game = document.getElementById('game_select').value;
-        const text = `👑 طلب شحن من ZAIN STORE%0A🎮 اللعبة: ${game.toUpperCase()}%0A💎 الكمية: ${selPack}%0A🆔 الآي دي: ${id}%0A📞 من رقم: ${num}`;
-        window.location.href = `https://wa.me/201021431977?text=${text}`;
-    }
-</script>
+        document.addEventListener('click', function(e) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = e.pageX - 50 + 'px';
+            explosion.style.top = e.pageY - 50 + 'px';
+            document.body.appendChild(explosion);
+            setTimeout(() => explosion.remove(), 500);
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 200);
+        });
+    </script>
 </body>
 </html>
-
