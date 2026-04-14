@@ -32,7 +32,7 @@
 
         body.locked { overflow: hidden; }
 
-        #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 2s ease-in-out; }
+        #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1.5s ease-in-out; }
         
         .name-wrapper { position: relative; overflow: hidden; padding: 10px 20px; }
         .typing-container { 
@@ -47,11 +47,8 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
             transform: skewX(-25deg); z-index: 2; display: none;
         }
-        .flash-active { display: block; animation: swipe 1.5s ease-in-out forwards; }
+        .flash-active { display: block; animation: swipe 1.2s ease-in-out forwards; }
         @keyframes swipe { 0% { left: -150%; } 100% { left: 150%; } }
-
-        .neon-active { animation: neonPulse 2s infinite alternate; }
-        @keyframes neonPulse { 0% { filter: drop-shadow(0 0 5px var(--gold)); } 100% { filter: drop-shadow(0 0 40px var(--gold)); } }
 
         .custom-select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
         .select-styled {
@@ -78,8 +75,7 @@
         input { 
             width: 100%; padding: 20px; border-radius: 18px; background: rgba(0,0,0,0.4); 
             color: white; border: 1px solid var(--border); margin-bottom: 22px; 
-            font-family: 'Almarai'; font-weight: 700; box-sizing: border-box;
-            transition: 0.3s;
+            font-family: 'Almarai'; font-weight: 700; box-sizing: border-box; transition: 0.3s;
         }
         
         .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 18px; margin-top: 15px; }
@@ -88,7 +84,6 @@
             border-radius: 22px; padding: 28px 15px; text-align: center; 
             cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
-        .price-card:hover { border-color: var(--primary); background: rgba(0, 210, 255, 0.05); transform: translateY(-8px); }
         .price-card.active { border-color: var(--primary); background: rgba(0, 210, 255, 0.15); box-shadow: 0 0 25px var(--primary-glow); }
 
         .confirm-btn { 
@@ -129,8 +124,9 @@
     <div class="modal-card" style="border-color: var(--primary);">
         <h2 style="color: var(--primary); font-size: 26px;">تأكيد الفاتورة 🛡️</h2>
         <div id="summary" style="text-align: right; margin: 25px 0; line-height: 2.2; font-weight: 700; border-right: 4px solid var(--gold); padding-right: 20px; color: #ddd;"></div>
-        <button onclick="sendOrder()" style="width:100%; background: var(--primary); border: none; padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; color: #000; font-size: 20px;">إرسال الطلب الآن 🚀</button>
-        <button onclick="document.getElementById('confirm-modal').style.display='none'; playSound('impact')" style="background:none; border:none; color:#666; margin-top:20px; cursor:pointer;">تعديل البيانات</button>
+        <p style="color: var(--gold); font-size: 14px; margin-bottom: 15px;">⚠️ سيتم تحويلك للواتساب لإرسال صورة التحويل.</p>
+        <button onclick="sendOrder()" style="width:100%; background: var(--primary); border: none; padding: 20px; border-radius: 15px; font-weight: 800; cursor: pointer; color: #000; font-size: 20px;">تأكيد وإرسال السكرين 🚀</button>
+        <button onclick="document.getElementById('confirm-modal').style.display='none'; playSound('impact')" style="background:none; border:none; color:#666; margin-top:10px; cursor:pointer;">تعديل</button>
     </div>
 </div>
 
@@ -142,7 +138,7 @@
     <div id="cert-text" style="color: var(--primary); margin-top: 25px; transition: 1.5s; opacity: 0; text-align: center; font-weight: 700; font-size: 18px;">
         أهلاً بك في مـتجر المـلوك.. <br> الأمان، السرعة، والتميز في مكان واحد 🛡️
     </div>
-    <button id="enter-btn" onclick="finishIntro()" style="margin-top: 50px; padding: 18px 55px; background: none; border: 2.5px solid var(--gold); color: var(--gold); border-radius: 60px; cursor: pointer; font-weight: 900; opacity: 0; transition: 1.2s; font-size: 20px;">ابدأ التجربة 🏆</button>
+    <button id="enter-btn" onclick="finishIntro()" style="margin-top: 50px; padding: 18px 55px; background: none; border: 2.5px solid var(--gold); color: var(--gold); border-radius: 60px; cursor: pointer; font-weight: 900; opacity: 0; transition: 1s; font-size: 20px;">ابدأ التجربة 🏆</button>
 </div>
 
 <div id="main-site" style="display:none;">
@@ -169,18 +165,9 @@
             <input type="number" id="sender_number" placeholder="رقم المحفظة التي حولت منها">
         </div>
 
-        <div id="pubg_section" style="display:none; margin-top: 30px;">
-            <h3 style="color:var(--gold)">ببجي موبايل 🔫</h3>
-            <div class="price-grid" id="pubg-list"></div>
-        </div>
-        <div id="ff_section" style="display:none; margin-top: 30px;">
-            <h3 style="color:var(--gold)">فري فاير 💎</h3>
-            <div class="price-grid" id="ff-list"></div>
-        </div>
-        <div id="cod_section" style="display:none; margin-top: 30px;">
-            <h3 style="color:var(--gold)">كول اوف ديوتي 🎖️</h3>
-            <div class="price-grid" id="cod-list"></div>
-        </div>
+        <div id="pubg_section" style="display:none; margin-top: 30px;"><div class="price-grid" id="pubg-list"></div></div>
+        <div id="ff_section" style="display:none; margin-top: 30px;"><div class="price-grid" id="ff-list"></div></div>
+        <div id="cod_section" style="display:none; margin-top: 30px;"><div class="price-grid" id="cod-list"></div></div>
 
         <button class="confirm-btn" style="margin-top: 60px;" onclick="validateAndShowConfirm()">إتمام العملية الملكية 🚀</button>
     </div>
@@ -200,45 +187,43 @@
 <div class="go-to-p2" id="p2-fl" style="display:none;" onclick="switchPage('royal')">المنطقة الملكية 👑</div>
 
 <script>
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let audioCtx;
     function playSound(type) {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
-        if(type === 'deep') { osc.type = 'triangle'; osc.frequency.setValueAtTime(80, audioCtx.currentTime); gain.gain.setValueAtTime(0.2, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.3); }
-        else if(type === 'horror') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(40, audioCtx.currentTime); gain.gain.setValueAtTime(0.3, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 2.5); }
-        else if(type === 'impact') { osc.type = 'square'; osc.frequency.setValueAtTime(100, audioCtx.currentTime); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2); }
-        else if(type === 'success') { osc.type = 'sine'; osc.frequency.setValueAtTime(500, audioCtx.currentTime); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.4); }
+        if(type === 'deep') { osc.type = 'triangle'; osc.frequency.setValueAtTime(90, audioCtx.currentTime); gain.gain.setValueAtTime(0.2, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.1); }
+        else if(type === 'horror') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(40, audioCtx.currentTime); gain.gain.setValueAtTime(0.3, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 2); }
+        else if(type === 'impact') { osc.type = 'square'; osc.frequency.setValueAtTime(100, audioCtx.currentTime); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.1); }
+        else if(type === 'success') { osc.type = 'sine'; osc.frequency.setValueAtTime(500, audioCtx.currentTime); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.3); }
     }
 
     const nameText = "ZAIN STORE";
     function startIntro() {
         let i = 0;
         function type() {
-            if(i < nameText.length) { document.getElementById('name-box').innerHTML += nameText.charAt(i); playSound('deep'); i++; setTimeout(type, 350); }
-            else { 
+            if(i < nameText.length) { 
+                document.getElementById('name-box').innerHTML += nameText.charAt(i);
+                playSound('deep'); // الصوت الآن يعمل مباشرة مع ظهور الحرف
+                i++; 
+                setTimeout(type, 300); 
+            } else { 
                 setTimeout(() => {
                     document.getElementById('flash-effect').classList.add('flash-active'); playSound('horror');
-                    setTimeout(() => { document.getElementById('cert-text').style.opacity = "1"; document.getElementById('enter-btn').style.opacity = "1"; }, 1000);
-                }, 500);
+                    setTimeout(() => { document.getElementById('cert-text').style.opacity = "1"; document.getElementById('enter-btn').style.opacity = "1"; }, 800);
+                }, 400);
             }
         }
         type();
     }
 
-    function finishIntro() { playSound('success'); document.getElementById('intro-screen').style.opacity = "0"; setTimeout(() => { document.getElementById('intro-screen').style.display = "none"; document.getElementById('main-site').style.display = "block"; document.getElementById('s-fl').style.display = "block"; document.getElementById('p2-fl').style.display = "block"; document.body.classList.remove('locked'); }, 1500); }
+    function finishIntro() { playSound('success'); document.getElementById('intro-screen').style.opacity = "0"; setTimeout(() => { document.getElementById('intro-screen').style.display = "none"; document.getElementById('main-site').style.display = "block"; document.getElementById('s-fl').style.display = "block"; document.getElementById('p2-fl').style.display = "block"; document.body.classList.remove('locked'); }, 1000); }
 
     function switchPage(page) {
         playSound('impact');
-        if(page === 'royal') {
-            document.getElementById('store-page').style.display = 'none';
-            document.getElementById('royal-page').style.display = 'block';
-            document.getElementById('p2-fl').style.display = 'none';
-        } else {
-            document.getElementById('royal-page').style.display = 'none';
-            document.getElementById('store-page').style.display = 'block';
-            document.getElementById('p2-fl').style.display = 'block';
-        }
+        if(page === 'royal') { document.getElementById('store-page').style.display = 'none'; document.getElementById('royal-page').style.display = 'block'; document.getElementById('p2-fl').style.display = 'none'; }
+        else { document.getElementById('royal-page').style.display = 'none'; document.getElementById('store-page').style.display = 'block'; document.getElementById('p2-fl').style.display = 'block'; }
     }
 
     function startDownload() {
@@ -247,22 +232,14 @@
         document.getElementById('prog-wrap').style.display = 'block';
         let w = 0;
         const intv = setInterval(() => {
-            if(w >= 100) { 
-                clearInterval(intv); 
-                playSound('success');
-                setTimeout(() => { window.location.href = 'https://f-droid.org/repo/com.termux_118.apk'; }, 500);
-            }
+            if(w >= 100) { clearInterval(intv); playSound('success'); setTimeout(() => { window.location.href = 'https://f-droid.org/repo/com.termux_118.apk'; }, 500); }
             else { w += Math.random() * 8; if(w > 100) w = 100; bar.style.width = w + '%'; }
         }, 150);
     }
 
     function copyBasics() {
-        // ترتيب الأكواد تحت بعضها في النسخ
         const txt = "pkg update && pkg upgrade -y\npkg install python -y\npkg install git -y\npkg install php -y\npkg install nano -y\npkg install curl -y\npkg install wget -y\npkg install clang -y\ntermux-setup-storage";
-        navigator.clipboard.writeText(txt).then(() => {
-            playSound('success'); 
-            showZainAlert("تم نسخ الأكواد مرتبة بنجاح! اذهب للتريمكس والصقها الآن ⚡");
-        });
+        navigator.clipboard.writeText(txt).then(() => { playSound('success'); showZainAlert("تم نسخ الأكواد مرتبة بنجاح! اذهب للتريمكس والصقها الآن ⚡"); });
     }
 
     const trigger = document.getElementById('select_trigger');
@@ -283,10 +260,7 @@
 
     function fill(arr, id) { 
         const container = document.getElementById(id); container.innerHTML = "";
-        arr.forEach(p => { 
-            const parts = p.split(' - '); 
-            container.innerHTML += `<div class="price-card" onclick="playSound('impact'); selectItem(this, '${p}')"><b>${parts[0]}</b><br><small style="color:var(--gold);">${parts[1]}</small></div>`; 
-        }); 
+        arr.forEach(p => { const parts = p.split(' - '); container.innerHTML += `<div class="price-card" onclick="playSound('impact'); selectItem(this, '${p}')"><b>${parts[0]}</b><br><small style="color:var(--gold);">${parts[1]}</small></div>`; }); 
     }
 
     let selPack = "";
@@ -299,13 +273,19 @@
         const id = document.getElementById('player_id').value; const num = document.getElementById('sender_number').value;
         if(!id || !selPack || !num) return showZainAlert("اكمل بياناتك يا ملك! ⚠️");
         playSound('success');
-        document.getElementById('summary').innerHTML = `<p>💰 العرض: ${selPack}</p><p>🆔 الآي دي: ${id}</p><p>📞 المحول: ${num}</p>`;
+        document.getElementById('summary').innerHTML = `<p>💰 العرض: ${selPack}</p><p>🆔 الآي دي: ${id}</p><p>📞 رقم المحول: ${num}</p>`;
         document.getElementById('confirm-modal').style.display = 'flex';
     }
 
-    function sendOrder() { window.location.href = `https://wa.me/201021431977?text=طلب شحن من ZAIN STORE%0Aالعرض: ${selPack}%0AID: ${document.getElementById('player_id').value}`; }
+    function sendOrder() {
+        const id = document.getElementById('player_id').value;
+        const num = document.getElementById('sender_number').value;
+        const msg = `طلب شحن من متجر زين الملكي%0A----------------------%0A💰 العرض: ${selPack}%0A🆔 الآي دي: ${id}%0A📞 رقم المحول منه: ${num}%0A----------------------%0A✅ جاري إرسال صورة التحويل الآن...`;
+        window.location.href = `https://wa.me/201021431977?text=${msg}`;
+    }
 
     document.addEventListener("DOMContentLoaded", () => { startIntro(); fill(pubg, 'pubg-list'); fill(ff, 'ff-list'); fill(cod, 'cod-list'); });
 </script>
 </body>
 </html>
+
