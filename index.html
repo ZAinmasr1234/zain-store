@@ -24,48 +24,15 @@
             background-image: radial-gradient(circle at 50% 50%, #1a1f29 0%, #0b0e14 100%);
         }
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
+        .container { max-width: 500px; margin: 0 auto; }
 
-        .header {
-            text-align: center;
-            padding: 20px 0;
-        }
+        .header { text-align: center; padding: 20px 0; }
+        .header i { font-size: 3rem; color: var(--primary); filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 10px; }
+        h1 { font-size: 1.8rem; margin: 10px 0; background: linear-gradient(to right, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .header i {
-            font-size: 3rem;
-            color: var(--primary);
-            filter: drop-shadow(0 0 10px var(--primary));
-            margin-bottom: 10px;
-        }
+        .section-title { display: flex; align-items: center; gap: 10px; background: rgba(0, 242, 254, 0.1); padding: 10px 15px; border-radius: 8px; margin: 25px 0 15px 0; border-right: 4px solid var(--primary); font-weight: bold; }
 
-        h1 {
-            font-size: 1.8rem;
-            margin: 10px 0;
-            background: linear-gradient(to right, #00f2fe, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(0, 242, 254, 0.1);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 25px 0 15px 0;
-            border-right: 4px solid var(--primary);
-            font-weight: bold;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         .item-card {
             background: var(--card-bg);
@@ -74,132 +41,55 @@
             padding: 20px 10px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             position: relative;
-            overflow: hidden;
+            user-select: none;
         }
 
-        .item-card i {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            display: block;
-            color: var(--secondary);
+        .item-card i { font-size: 1.8rem; margin-bottom: 10px; display: block; color: var(--secondary); pointer-events: none; }
+        .item-card span { pointer-events: none; }
+        
+        .item-card.selected { 
+            border-color: var(--primary); 
+            background: rgba(0, 242, 254, 0.12); 
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+        
+        .item-card input[type="checkbox"] { display: none; }
+        .price-tag { display: block; color: var(--primary); font-weight: bold; margin-top: 8px; pointer-events: none; }
+
+        .dynamic-input { display: none; margin: 15px 0; animation: slideDown 0.4s ease; }
+        .dynamic-input input {
+            width: 100%; padding: 14px; background: var(--card-bg); border: 2px solid var(--primary);
+            border-radius: 10px; color: white; text-align: center; box-sizing: border-box; font-size: 1.1rem; outline: none;
         }
 
-        .item-card:hover {
-            border-color: var(--primary);
-            transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
-        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .item-card.selected {
-            border-color: var(--primary);
-            background: rgba(0, 242, 254, 0.08);
-            box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.2);
-        }
-
-        .item-card.selected::after {
-            content: "\f058";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: var(--primary);
-        }
-
-        .item-card input { display: none; }
-
-        .price-tag {
-            display: block;
-            color: var(--primary);
-            font-weight: bold;
-            margin-top: 8px;
-            font-size: 0.95rem;
-        }
-
-        /* ستايل الملحوظة الجديدة */
-        .price-note {
-            background: rgba(243, 156, 18, 0.1);
-            border: 1px dashed var(--accent);
-            color: var(--accent);
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
+        .price-note { background: rgba(243, 156, 18, 0.1); border: 1px dashed var(--accent); color: var(--accent); padding: 10px; border-radius: 8px; margin-top: 20px; text-align: center; font-size: 0.9rem; font-weight: bold; }
 
         .btn-send {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            width: 100%; padding: 18px; background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none; border-radius: 12px; color: #000; font-weight: bold; font-size: 1.1rem;
+            cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
-        .fast-reply {
-            display: block;
-            text-align: center;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            color: #8b949e;
-        }
+        .fast-reply { display: block; text-align: center; font-size: 0.85rem; margin-top: 10px; color: #8b949e; }
 
-        .support-section {
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .support-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 14px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .wa { background: #25d366; }
-        .tg { background: #0088cc; }
-        .support-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .support-section { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
+        .support-btn { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px; border-radius: 10px; text-decoration: none; color: white; font-weight: 600; }
+        .wa { background: #25d366; } .tg { background: #0088cc; }
 
         #error-toast {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff4b2b;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            font-weight: bold;
+            display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #ff4b2b; color: white; padding: 12px 25px; border-radius: 50px; z-index: 1000; text-align: center; width: 85%; font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <div id="error-toast">⚠️ يرجى اختيار خدمة واحدة على الأقل!</div>
+    <div id="error-toast"></div>
 
     <div class="container">
         <div class="header">
@@ -208,75 +98,65 @@
             <p style="color: #8b949e; font-size: 0.9rem;">أسرع خدمات سحب البيانات والخدمات الحكومية</p>
         </div>
 
-        <div class="section-title">
-            <i class="fas fa-search-plus"></i> خدمات سحب الداتا
-        </div>
+        <div class="section-title"><i class="fas fa-search-plus"></i> خدمات سحب الداتا</div>
         <div class="card-grid">
-            <label class="item-card">
-                <input type="checkbox" name="service" value="سحب داتا 010" data-price="45">
-                <i class="fas fa-file-invoice"></i>
+            <div class="item-card data-opt" onclick="handleCardClick(this)">
+                <input type="checkbox" name="service" value="سحب داتا 010" data-price="45" data-prefix="010">
+                <i class="fas fa-mobile-alt"></i>
                 <span>سحب داتا 010</span>
                 <span class="price-tag">45 ج</span>
-            </label>
-            <label class="item-card">
-                <input type="checkbox" name="service" value="سحب داتا 012" data-price="15">
-                <i class="fas fa-file-invoice"></i>
+            </div>
+            <div class="item-card data-opt" onclick="handleCardClick(this)">
+                <input type="checkbox" name="service" value="سحب داتا 012" data-price="15" data-prefix="012">
+                <i class="fas fa-mobile-alt"></i>
                 <span>سحب داتا 012</span>
                 <span class="price-tag">15 ج</span>
-            </label>
-            <label class="item-card">
-                <input type="checkbox" name="service" value="سحب داتا 015" data-price="40">
-                <i class="fas fa-file-invoice"></i>
+            </div>
+            <div class="item-card data-opt" onclick="handleCardClick(this)">
+                <input type="checkbox" name="service" value="سحب داتا 015" data-price="40" data-prefix="015">
+                <i class="fas fa-mobile-alt"></i>
                 <span>سحب داتا 015</span>
                 <span class="price-tag">40 ج</span>
-            </label>
+            </div>
         </div>
 
-        <div class="section-title">
-            <i class="fas fa-id-card"></i> الخدمات الحكومية
+        <div id="data-input-box" class="dynamic-input">
+            <input type="tel" id="phone-input" placeholder="ادخل الرقم المراد السحب عليه" maxlength="11">
         </div>
+
+        <div class="section-title"><i class="fas fa-id-card"></i> الخدمات الحكومية</div>
         <div class="card-grid">
-            <label class="item-card">
+            <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="شهادة ميلاد أول مرة" data-price="230">
-                <i class="fas fa-baby"></i>
-                <span>ميلاد (أول مرة)</span>
-                <span class="price-tag">230 ج</span>
-            </label>
-            <label class="item-card">
+                <i class="fas fa-baby"></i><span>ميلاد (أول مرة)</span><span class="price-tag">230 ج</span>
+            </div>
+            <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="شهادة ميلاد ثاني مرة" data-price="200">
-                <i class="fas fa-certificate"></i>
-                <span>ميلاد (ثاني مرة)</span>
-                <span class="price-tag">200 ج</span>
-            </label>
-            <label class="item-card">
+                <i class="fas fa-certificate"></i><span>ميلاد (ثاني مرة)</span><span class="price-tag">200 ج</span>
+            </div>
+            <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="قسيمة (زواج/طلاق)" data-price="240">
-                <i class="fas fa-ring"></i>
-                <span>قسيمة زواج/طلاق</span>
-                <span class="price-tag">240 ج</span>
-            </label>
-            <label class="item-card">
+                <i class="fas fa-ring"></i><span>قسيمة زواج/طلاق</span><span class="price-tag">240 ج</span>
+            </div>
+            <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="شهادة وفاة" data-price="240">
-                <i class="fas fa-book-dead"></i>
-                <span>شهادة وفاة</span>
-                <span class="price-tag">240 ج</span>
-            </label>
-            <label class="item-card">
+                <i class="fas fa-book-dead"></i><span>شهادة وفاة</span><span class="price-tag">240 ج</span>
+            </div>
+            <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="قيد عائلي مميكن" data-price="650">
-                <i class="fas fa-users"></i>
-                <span>قيد عائلي</span>
-                <span class="price-tag">650 ج</span>
-            </label>
-            <label class="item-card">
+                <i class="fas fa-users"></i><span>قيد عائلي</span><span class="price-tag">650 ج</span>
+            </div>
+            <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="صورة سيستم جنائي" data-price="400">
-                <i class="fas fa-user-shield"></i>
-                <span>سيستم جنائي</span>
-                <span class="price-tag">400 ج</span>
-            </label>
+                <i class="fas fa-user-shield"></i><span>سيستم جنائي</span><span class="price-tag">400 ج</span>
+            </div>
         </div>
 
-        <div class="price-note">
-            ⚠️ قد يزيد المبلغ من 10 لـ 15 جنية على حسب سعر الموظف
+        <div id="gov-input-box" class="dynamic-input">
+            <input type="tel" id="id-input" placeholder="ادخل الرقم القومي المراد السحب عليه" maxlength="14">
         </div>
+
+        <div class="price-note">⚠️ قد يزيد المبلغ من 10 لـ 15 جنية على حسب سعر الموظف</div>
 
         <button class="btn-send" onclick="sendOrder()">
             <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
@@ -291,36 +171,65 @@
     </div>
 
     <script>
-        document.querySelectorAll('.item-card').forEach(card => {
-            card.addEventListener('click', function() {
-                this.classList.toggle('selected');
-                const chk = this.querySelector('input');
-                chk.checked = !chk.checked;
-            });
-        });
+        function showMsg(m) {
+            const t = document.getElementById('error-toast');
+            t.innerText = m; t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3500);
+        }
+
+        function handleCardClick(el) {
+            el.classList.toggle('selected');
+            const chk = el.querySelector('input[type="checkbox"]');
+            chk.checked = el.classList.contains('selected');
+
+            updateInputs();
+        }
+
+        function updateInputs() {
+            const anyData = document.querySelectorAll('.data-opt.selected').length > 0;
+            const anyGov = document.querySelectorAll('.gov-opt.selected').length > 0;
+            
+            document.getElementById('data-input-box').style.display = anyData ? 'block' : 'none';
+            document.getElementById('gov-input-box').style.display = anyGov ? 'block' : 'none';
+        }
 
         function sendOrder() {
-            const selected = document.querySelectorAll('input[name="service"]:checked');
-            
-            if (selected.length === 0) {
-                const toast = document.getElementById('error-toast');
-                toast.style.display = 'block';
-                setTimeout(() => toast.style.display = 'none', 3000);
-                return;
-            }
+            const selectedChecks = document.querySelectorAll('input[name="service"]:checked');
+            if (selectedChecks.length === 0) return showMsg("⚠️ اختار خدمة واحدة على الأقل يا بطل!");
 
-            let text = "طلب جديد من Zain Store ⚡\n\nالخدمات المختارة:\n";
+            let msgDetails = "";
             let total = 0;
+            let deliveryTime = "يومين"; 
+            let error = null;
 
-            selected.forEach(item => {
-                text += `• ${item.value} - ${item.getAttribute('data-price')} ج\n`;
-                total += parseInt(item.getAttribute('data-price'));
+            selectedChecks.forEach(input => {
+                const card = input.closest('.item-card');
+                const price = parseInt(input.getAttribute('data-price'));
+                total += price;
+
+                if (card.classList.contains('data-opt')) {
+                    deliveryTime = "30 دقيقة";
+                    const prefix = input.getAttribute('data-prefix');
+                    const phone = document.getElementById('phone-input').value;
+                    
+                    if (phone.length !== 11 || !phone.startsWith(prefix)) {
+                        error = `الرقم الخاص بـ ${input.value} لازم يبدأ بـ ${prefix} ويكون 11 رقم!`;
+                    }
+                    msgDetails += `• ${input.value} (رقم: ${phone})\n`;
+                } else {
+                    const idNum = document.getElementById('id-input').value;
+                    if (idNum.length !== 14) {
+                        error = "الرقم القومي لازم يكون 14 رقم بالظبط!";
+                    }
+                    msgDetails += `• ${input.value} (قومي: ${idNum})\n`;
+                }
             });
 
-            text += `\n💰 الإجمالي الأساسي: ${total} جنيه\n⚠️ (قد تضاف رسوم موظف 10-15 ج)\n🚀 التسليم خلال يومين`;
+            if (error) return showMsg("⚠️ " + error);
 
-            const url = `https://wa.me/201021431977?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
+            const finalMsg = `طلب جديد Zain Store ⚡\n\nالخدمات المطلوبة:\n${msgDetails}\n💰 الإجمالي: ${total} ج\n⏰ التسليم: خلال ${deliveryTime}\n⚠️ تضاف رسوم موظف (10-15ج) عند التنفيذ`;
+            
+            window.open(`https://wa.me/201021431977?text=${encodeURIComponent(finalMsg)}`, '_blank');
         }
     </script>
 </body>
