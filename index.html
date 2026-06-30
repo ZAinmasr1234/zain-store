@@ -2,187 +2,811 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE | العصر الذهبي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ZAIN AL WEB - شحن جواهر Free Fire</title>
     <style>
-        :root {
-            --primary: #00f2ff;
-            --primary-dim: rgba(0, 242, 255, 0.1);
-            --gold: #f1c40f;
-            --gold-glow: rgba(241, 196, 15, 0.4);
-            --bg-dark: #000103;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(0, 242, 255, 0.15);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        body { 
-            margin: 0; padding: 0; background-color: var(--bg-dark);
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 50px 50px; font-family: 'Cairo', sans-serif; color: white; overflow-x: hidden;
-            animation: backgroundPan 60s linear infinite;
-        }
-
-        @keyframes backgroundPan { from { background-position: 0 0; } to { background-position: 1000px 1000px; } }
-        body.locked { overflow: hidden; }
-
-        #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1s; }
-        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(40px, 10vw, 80px); font-weight: 900; background: linear-gradient(90deg, #fff, var(--gold), #fff); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200%; }
-        .neon-active { animation: shine 3s linear infinite, neonPulse 2s infinite; }
-        @keyframes shine { to { background-position: 200%; } }
-        @keyframes neonPulse { 0%, 100% { text-shadow: 0 0 20px var(--gold); } 50% { text-shadow: 0 0 40px var(--gold); } }
-
-        /* القائمة المخصصة الفخمة */
-        .custom-select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
-        .select-styled {
-            background: rgba(0, 0, 0, 0.9); border: 2px solid var(--primary);
-            box-shadow: 0 0 15px var(--primary-dim); color: var(--primary);
-            font-weight: 900; padding: 20px; border-radius: 15px; cursor: pointer;
-            text-align: center; display: flex; justify-content: center; align-items: center;
-        }
-        .select-styled:after { content: '▼'; margin-right: 15px; font-size: 12px; }
-        .select-options {
-            position: absolute; top: 105%; right: 0; left: 0;
-            background: #080a0f; border: 2px solid var(--primary);
-            border-radius: 15px; z-index: 999; display: none;
-            overflow: hidden; box-shadow: 0 10px 40px rgba(0, 242, 255, 0.3);
-            animation: fadeIn 0.3s ease;
-        }
-        .select-options div { padding: 20px; text-align: center; border-bottom: 1px solid rgba(0, 242, 255, 0.1); transition: 0.3s; font-weight: 700; color: white; cursor: pointer; }
-        .select-options div:hover { background: var(--primary); color: black; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .container { padding: 20px; max-width: 900px; margin: 0 auto; padding-bottom: 200px; }
-        .order-form { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 25px; backdrop-filter: blur(5px); }
-        input { width: 100%; padding: 18px; border-radius: 15px; background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; font-family: 'Cairo'; font-weight: 700; box-sizing: border-box; }
         
-        .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
-        .price-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px 15px; text-align: center; cursor: pointer; transition: 0.4s; }
-        .price-card:hover { border-color: var(--gold); background: rgba(241, 196, 15, 0.05); transform: translateY(-5px); }
-        .price-card.active { border-color: var(--gold); background: rgba(241, 196, 15, 0.1); box-shadow: 0 0 20px var(--gold-glow); }
-
-        .confirm-btn { width: 100%; padding: 25px; background: linear-gradient(45deg, #f1c40f, #d4ac0d); border: none; border-radius: 20px; font-weight: 900; font-size: 22px; cursor: pointer; color: black; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #0d0d1a 0%, #1a1a3e 30%, #0f0f2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding-bottom: 30px;
+        }
         
-        .support-float { position: fixed; bottom: 30px; left: 30px; background: #000; border: 2px solid var(--primary); padding: 15px 30px; border-radius: 50px; cursor: pointer; z-index: 4000; font-weight: 900; color: var(--primary); animation: pBlue 2s infinite; }
-        .go-to-p2 { position: fixed; bottom: 30px; right: 30px; background: #000; border: 2px solid var(--gold); padding: 15px 30px; border-radius: 50px; cursor: pointer; z-index: 4000; font-weight: 900; color: var(--gold); animation: pGold 2s infinite; }
-        @keyframes pBlue { 0%, 100% { box-shadow: 0 0 10px var(--primary-dim); } 50% { box-shadow: 0 0 20px var(--primary); } }
-        @keyframes pGold { 0%, 100% { box-shadow: 0 0 10px var(--gold-glow); } 50% { box-shadow: 0 0 20px var(--gold); } }
-
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-card { background: #080a0f; border: 2px solid var(--primary); padding: 40px; border-radius: 35px; text-align: center; width: 90%; max-width: 420px; }
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 18px;
+            background: rgba(10,10,30,0.95);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+        }
+        
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand-name {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #ffd700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,215,0,0.4);
+        }
+        
+        .brand-sub {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+        }
+        
+        .menu-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ffd700;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+        }
+        
+        .menu-btn:hover {
+            background: rgba(255,215,0,0.15);
+            border-color: rgba(255,215,0,0.4);
+        }
+        
+        .menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: #ffd700;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        
+        /* ===== DROPDOWN MENU ===== */
+        .dropdown-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f0f2e 0%, #1a1a3e 100%);
+            padding: 80px 20px 20px;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.5);
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 200;
+            border-right: 1px solid rgba(255,215,0,0.1);
+        }
+        
+        .dropdown-menu.active {
+            transform: translateX(0);
+        }
+        
+        .menu-title {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            color: #fff;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            text-align: right;
+            font-family: inherit;
+            width: 100%;
+        }
+        
+        .menu-item:hover {
+            background: rgba(255,215,0,0.1);
+            border-color: rgba(255,215,0,0.3);
+            transform: translateX(-3px);
+        }
+        
+        .menu-item .icon {
+            font-size: 1.4rem;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        
+        .menu-item .text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .menu-item .text strong {
+            font-size: 0.9rem;
+        }
+        
+        .menu-item .text small {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 2px;
+        }
+        
+        /* ===== OVERLAY ===== */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(3px);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* ===== HERO ===== */
+        .hero {
+            text-align: center;
+            padding: 25px 20px 15px;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #ffd700;
+            margin-bottom: 12px;
+        }
+        
+        .hero h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        
+        .hero h1 span {
+            color: #ffd700;
+        }
+        
+        .hero p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+        
+        /* ===== GAME CARD ===== */
+        .game-card {
+            background: linear-gradient(135deg, rgba(255,140,0,0.08), rgba(255,215,0,0.05));
+            border: 1px solid rgba(255,140,0,0.2);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin: 0 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,140,0,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .game-icon {
+            font-size: 2.8rem;
+            z-index: 1;
+        }
+        
+        .game-info {
+            z-index: 1;
+        }
+        
+        .game-info h2 {
+            color: #ff8c00;
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+        
+        .game-info p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+        
+        .game-badge {
+            margin-right: auto;
+            background: rgba(255,140,0,0.15);
+            color: #ff8c00;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        /* ===== SECTIONS ===== */
+        .section {
+            margin: 0 18px 22px;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .section-title .icon {
+            font-size: 1.1rem;
+        }
+        
+        .section-badge {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.05);
+            padding: 3px 10px;
+            border-radius: 8px;
+        }
+        
+        /* ===== INPUT ===== */
+        .input-group {
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 16px;
+            padding-left: 45px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.25);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .input-wrapper input:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
+        }
+        
+        .input-wrapper input::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.4;
+        }
+        
+        /* ===== PACKAGES ===== */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .package-card {
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .package-card:hover {
+            border-color: rgba(255,215,0,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .package-card.selected {
+            border-color: #ffd700;
+            background: rgba(255,215,0,0.08);
+            box-shadow: 0 0 20px rgba(255,215,0,0.1);
+        }
+        
+        .package-card .diamond-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+        
+        .package-card .amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+        
+        .package-card .amount-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 1px;
+        }
+        
+        .package-card .price {
+            font-size: 1rem;
+            color: #4ade80;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+        
+        .package-card .currency {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 2px;
+        }
+        
+        .package-card .check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #1a1a2e;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s;
+        }
+        
+        .package-card.selected .check {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* ===== SUMMARY ===== */
+        .summary-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-top: 4px;
+            padding-top: 14px;
+            border-top: 2px solid rgba(255,215,0,0.15);
+        }
+        
+        .summary-label {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .summary-value {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .summary-item:last-child .summary-label {
+            color: #ffd700;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        
+        .summary-item:last-child .summary-value {
+            color: #ffd700;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+        
+        /* ===== ORDER BUTTON ===== */
+        .order-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border: none;
+            border-radius: 14px;
+            color: #0d0d1a;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+            font-family: inherit;
+            box-shadow: 0 4px 20px rgba(255,140,0,0.2);
+        }
+        
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255,140,0,0.35);
+        }
+        
+        .order-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.75rem;
+        }
+        
+        .footer .brand-footer {
+            color: rgba(255,215,0,0.5);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+        .section:nth-child(5) { animation-delay: 0.4s; }
     </style>
 </head>
-<body class="locked">
-
-<div id="zain-alert-overlay" class="modal">
-    <div class="modal-card" style="border-color: var(--gold);">
-        <div id="alert-icon" style="font-size: 60px;">⚠️</div>
-        <h2 id="alert-title" style="color: var(--gold);">تنبيه يا بطل</h2>
-        <p id="alert-msg" style="font-size: 18px; line-height: 1.6;"></p>
-        <button onclick="closeZainAlert()" style="background: var(--gold); border: none; padding: 15px 40px; border-radius: 10px; font-weight: 900; cursor: pointer;">تمام ✅</button>
-    </div>
-</div>
-
-<div id="confirm-modal" class="modal">
-    <div class="modal-card" style="border-color: var(--primary);">
-        <h2 style="color: var(--primary);">تأكيد طلبك يا بطل 🛡️</h2>
-        <div id="summary" style="text-align: right; margin: 20px 0; line-height: 2; font-weight: 700; border-right: 3px solid var(--gold); padding-right: 15px;"></div>
-        <button onclick="sendOrder()" style="width:100%; background: var(--primary); border: none; padding: 18px; border-radius: 12px; font-weight: 900; cursor: pointer; color: #000;">تأكيد وإرسال 🚀</button>
-        <button onclick="document.getElementById('confirm-modal').style.display='none'" style="background:none; border:none; color:#777; margin-top:15px; cursor:pointer;">تعديل الب            </div>
-            <div class="item-card gov-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="شهادة وفاة" data-price="240">
-                <i class="fas fa-book-dead"></i><span>شهادة وفاة</span><span class="price-tag">240 ج</span>
-            </div>
-            <div class="item-card gov-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="قيد عائلي مميكن" data-price="650">
-                <i class="fas fa-users"></i><span>قيد عائلي</span><span class="price-tag">650 ج</span>
-            </div>
-            <div class="item-card gov-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="صورة سيستم جنائي" data-price="400">
-                <i class="fas fa-user-shield"></i><span>سيستم جنائي</span><span class="price-tag">400 ج</span>
-            </div>
-        </div>
-
-        <div id="gov-input-box" class="dynamic-input">
-            <input type="tel" id="id-input" placeholder="ادخل الرقم القومي المراد السحب عليه" maxlength="14">
-        </div>
-
-        <div class="price-note">⚠️ قد يزيد المبلغ من 10 لـ 15 جنية على حسب سعر الموظف</div>
-
-        <button class="btn-send" onclick="sendOrder()">
-            <i class="fab fa-whatsapp"></i> إرسال الطلب الآن
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
-        <span class="fast-reply">الرقم 01021431977 للرد السريع والمتابعة ⚡</span>
-
-        <div class="support-section">
-            <a href="https://wa.me/201210233693" class="support-btn wa"><i class="fab fa-whatsapp"></i> دعم واتساب (1)</a>
-            <a href="https://wa.me/201021431977" class="support-btn wa"><i class="fab fa-whatsapp"></i> دعم واتساب (2)</a>
-            <a href="https://t.me/VIP_ZVN" class="support-btn tg"><i class="fab fa-telegram-plane"></i> دعم تليجرام</a>
+        
+        <div class="brand">
+            <div class="brand-icon">💎</div>
+            <div class="brand-text">
+                <div class="brand-name">ZAIN AL WEB</div>
+                <div class="brand-sub">شحن الألعاب</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- ===== OVERLAY ===== -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    
+    <!-- ===== SIDEBAR MENU ===== -->
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="menu-title">التواصل معنا</div>
+        
+        <button class="menu-item" onclick="openGmail()">
+            <div class="icon">📧</div>
+            <div class="text">
+                <strong>البريد الإلكتروني</strong>
+                <small>أرسل لنا عبر Gmail</small>
+            </div>
+        </button>
+        
+        <button class="menu-item" onclick="openWhatsApp()">
+            <div class="icon">💬</div>
+            <div class="text">
+                <strong>واتساب</strong>
+                <small>تواصل مباشر عبر WhatsApp</small>
+            </div>
+        </button>
+    </div>
+    
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+        <div class="hero-badge">🔥 الأكثر مبيعاً</div>
+        <h1>شحن <span>جواهر Free Fire</span></h1>
+        <p>أسرع وأسهل طريقة لشحن حسابك</p>
+    </div>
+    
+    <!-- ===== GAME CARD ===== -->
+    <div class="game-card">
+        <div class="game-icon">🔥</div>
+        <div class="game-info">
+            <h2>Free Fire</h2>
+            <p>شحن فوري ومضمون 100%</p>
+        </div>
+        <div class="game-badge">متوفر</div>
+    </div>
+    
+    <!-- ===== PLAYER ID ===== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="icon">📝</span>
+                معرف اللاعب
+            </div>
+            <div class="section-badge">مطلوب</div>
+        </div>
+        <div class="input-group">
+            <label for="playerId">أدخل Player ID الخاص بك في Free Fire</label>
+            <div class="input-wrapper">
+                <input type="text" id="playerId" placeholder="مثال: 1234567890" oninput="updateSummary()" maxlength="12">
+                <span class="input-icon">👤</span>
+            </div>
         </div>
     </div>
-
+    
+    <!-- ===== PACKAGES ===== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="icon">💎</span>
+                اختر الباقة
+            </div>
+            <div class="section-badge">8 باقات</div>
+        </div>
+        <div class="packages-grid" id="packagesGrid"></div>
+    </div>
+    
+    <!-- ===== ORDER SUMMARY ===== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="icon">📋</span>
+                ملخص الطلب
+            </div>
+        </div>
+        <div class="summary-box" id="summaryBox">
+            <div class="summary-item">
+                <span class="summary-label">🎮 اللعبة</span>
+                <span class="summary-value">Free Fire</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">🆔 معرف اللاعب</span>
+                <span class="summary-value" id="summaryId">-</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">💎 الباقة</span>
+                <span class="summary-value" id="summaryPackage">-</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">💰 السعر الإجمالي</span>
+                <span class="summary-value" id="summaryPrice">-</span>
+            </div>
+        </div>
+        <button class="order-btn" id="orderBtn" onclick="sendOrder()" disabled>
+            🚀 اطلب الآن
+        </button>
+    </div>
+    
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <div class="brand-footer">ZAIN AL WEB</div>
+        <div>جميع الحقوق محفوظة © 2025</div>
+    </div>
+    
     <script>
-        function showMsg(m) {
-            const t = document.getElementById('error-toast');
-            t.innerText = m; t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3500);
+        // ===== HIDDEN CONTACT INFO =====
+        const CONTACT_EMAIL = "mozozo365r@gmail.com";
+        const CONTACT_PHONE = "+201021431977";
+        
+        // ===== PACKAGES DATA =====
+        const packages = [
+            { diamonds: 50, price: 35 },
+            { diamonds: 100, price: 65 },
+            { diamonds: 210, price: 140 },
+            { diamonds: 310, price: 200 },
+            { diamonds: 530, price: 340 },
+            { diamonds: 1080, price: 700 },
+            { diamonds: 2200, price: 1430 },
+            { diamonds: 5600, price: 3640 }
+        ];
+        
+        let selectedPackage = null;
+        
+        // ===== RENDER PACKAGES =====
+        function renderPackages() {
+            const grid = document.getElementById('packagesGrid');
+            grid.innerHTML = packages.map((pkg, index) => `
+                <div class="package-card" onclick="selectPackage(${index})" id="pkg-${index}">
+                    <div class="check">✓</div>
+                    <div class="diamond-icon">💎</div>
+                    <div class="amount">${pkg.diamonds.toLocaleString()}</div>
+                    <div class="amount-label">جوهرة</div>
+                    <div class="price">${pkg.price} جنيه</div>
+                    <div class="currency">مصري</div>
+                </div>
+            `).join('');
         }
-
-        function handleCardClick(el) {
-            el.classList.toggle('selected');
-            const chk = el.querySelector('input[type="checkbox"]');
-            chk.checked = el.classList.contains('selected');
-
-            updateInputs();
-        }
-
-        function updateInputs() {
-            const anyData = document.querySelectorAll('.data-opt.selected').length > 0;
-            const anyGov = document.querySelectorAll('.gov-opt.selected').length > 0;
-            
-            document.getElementById('data-input-box').style.display = anyData ? 'block' : 'none';
-            document.getElementById('gov-input-box').style.display = anyGov ? 'block' : 'none';
-        }
-
-        function sendOrder() {
-            const selectedChecks = document.querySelectorAll('input[name="service"]:checked');
-            if (selectedChecks.length === 0) return showMsg("⚠️ اختار خدمة واحدة على الأقل يا بطل!");
-
-            let msgDetails = "";
-            let total = 0;
-            let deliveryTime = "يومين"; 
-            let error = null;
-
-            selectedChecks.forEach(input => {
-                const card = input.closest('.item-card');
-                const price = parseInt(input.getAttribute('data-price'));
-                total += price;
-
-                if (card.classList.contains('data-opt')) {
-                    deliveryTime = "30 دقيقة";
-                    const prefix = input.getAttribute('data-prefix');
-                    const phone = document.getElementById('phone-input').value;
-                    
-                    if (phone.length !== 11 || !phone.startsWith(prefix)) {
-                        error = `الرقم الخاص بـ ${input.value} لازم يبدأ بـ ${prefix} ويكون 11 رقم!`;
-                    }
-                    msgDetails += `• ${input.value} (رقم: ${phone})\n`;
-                } else {
-                    const idNum = document.getElementById('id-input').value;
-                    if (idNum.length !== 14) {
-                        error = "الرقم القومي لازم يكون 14 رقم بالظبط!";
-                    }
-                    msgDetails += `• ${input.value} (قومي: ${idNum})\n`;
-                }
+        
+        // ===== SELECT PACKAGE =====
+        function selectPackage(index) {
+            document.querySelectorAll('.package-card').forEach(card => {
+                card.classList.remove('selected');
             });
-
-            if (error) return showMsg("⚠️ " + error);
-
-            const finalMsg = `طلب جديد Zain Store ⚡\n\nالخدمات المطلوبة:\n${msgDetails}\n💰 الإجمالي: ${total} ج\n⏰ التسليم: خلال ${deliveryTime}\n⚠️ تضاف رسوم موظف (10-15ج) عند التنفيذ`;
-            
-            window.open(`https://wa.me/201021431977?text=${encodeURIComponent(finalMsg)}`, '_blank');
+            document.getElementById(`pkg-${index}`).classList.add('selected');
+            selectedPackage = packages[index];
+            updateSummary();
         }
+        
+        // ===== UPDATE SUMMARY =====
+        function updateSummary() {
+            const playerId = document.getElementById('playerId').value.trim();
+            document.getElementById('summaryId').textContent = playerId || '-';
+            document.getElementById('summaryPackage').textContent = 
+                selectedPackage ? `${selectedPackage.diamonds.toLocaleString()} جوهرة` : '-';
+            document.getElementById('summaryPrice').textContent = 
+                selectedPackage ? `${selectedPackage.price} جنيه` : '-';
+            const btn = document.getElementById('orderBtn');
+            btn.disabled = !(playerId && selectedPackage);
+        }
+        
+        // ===== OPEN GMAIL =====
+        function openGmail() {
+            const subject = encodeURIComponent("استفسار - شحن جواهر Free Fire");
+            const body = encodeURIComponent("مرحباً ZAIN AL WEB،\\n\\nأرغب في الاستفسار عن شحن جواهر Free Fire.\\n\\nشكراً!");
+            window.open(`https://mail.google.com/mail/?view=cm&to=${CONTACT_EMAIL}&su=${subject}&body=${body}`, '_blank');
+            toggleMenu();
+        }
+        
+        // ===== OPEN WHATSAPP =====
+        function openWhatsApp() {
+            const message = encodeURIComponent("مرحباً ZAIN AL WEB، أرغب في الاستفسار عن شحن جواهر Free Fire");
+            window.open(`https://wa.me/${CONTACT_PHONE.replace('+', '')}?text=${message}`, '_blank');
+            toggleMenu();
+        }
+        
+        // ===== SEND ORDER =====
+        function sendOrder() {
+            const playerId = document.getElementById('playerId').value.trim();
+            if (!playerId || !selectedPackage) return;
+            
+            const message = `مرحباً ZAIN AL Web،\n\nأرغب في شحن جواهر Free Fire\n\n🎮 اللعبة: Free Fire\n🆔 معرف اللاعب: ${playerId}\n💎 الباقة: ${selectedPackage.diamonds.toLocaleString()} جوهرة\n💰 السعر: ${selectedPackage.price} جنيه مصري\n\nيرجى التأكيد على الطلب، شكراً!`;
+            
+            window.open(`https://wa.me/${CONTACT_PHONE.replace('+', '')}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+        
+        // ===== TOGGLE MENU =====
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            const overlay = document.getElementById('overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        // ===== ONLY NUMBERS IN PLAYER ID =====
+        document.getElementById('playerId').addEventListener('input', function(e) {
+            this.value = this.value.replace(/\\D/g, '');
+        });
+        
+        // ===== CLOSE MENU ON ESCAPE =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const menu = document.getElementById('dropdownMenu');
+                if (menu.classList.contains('active')) toggleMenu();
+            }
+        });
+        
+        // ===== INITIALIZE =====
+        renderPackages();
     </script>
 </body>
-</html>
-
+    </html>
