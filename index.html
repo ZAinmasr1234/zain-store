@@ -3,141 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zain Data Store | متجر زين</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>ZAIN STORE | العصر الذهبي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00f2fe;
-            --secondary: #4facfe;
-            --bg: #0b0e14;
-            --card-bg: #161b22;
-            --text: #e6edf3;
-            --accent: #f39c12;
+            --primary: #00f2ff;
+            --primary-dim: rgba(0, 242, 255, 0.1);
+            --gold: #f1c40f;
+            --gold-glow: rgba(241, 196, 15, 0.4);
+            --bg-dark: #000103;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(0, 242, 255, 0.15);
         }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 15px;
-            background-image: radial-gradient(circle at 50% 50%, #1a1f29 0%, #0b0e14 100%);
+        body { 
+            margin: 0; padding: 0; background-color: var(--bg-dark);
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px; font-family: 'Cairo', sans-serif; color: white; overflow-x: hidden;
+            animation: backgroundPan 60s linear infinite;
         }
 
-        .container { max-width: 500px; margin: 0 auto; }
+        @keyframes backgroundPan { from { background-position: 0 0; } to { background-position: 1000px 1000px; } }
+        body.locked { overflow: hidden; }
 
-        .header { text-align: center; padding: 20px 0; }
-        .header i { font-size: 3rem; color: var(--primary); filter: drop-shadow(0 0 10px var(--primary)); margin-bottom: 10px; }
-        h1 { font-size: 1.8rem; margin: 10px 0; background: linear-gradient(to right, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        #intro-screen { position: fixed; inset: 0; background: #000; z-index: 1000000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1s; }
+        .typing-container { font-family: 'Orbitron', sans-serif; font-size: clamp(40px, 10vw, 80px); font-weight: 900; background: linear-gradient(90deg, #fff, var(--gold), #fff); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200%; }
+        .neon-active { animation: shine 3s linear infinite, neonPulse 2s infinite; }
+        @keyframes shine { to { background-position: 200%; } }
+        @keyframes neonPulse { 0%, 100% { text-shadow: 0 0 20px var(--gold); } 50% { text-shadow: 0 0 40px var(--gold); } }
 
-        .section-title { display: flex; align-items: center; gap: 10px; background: rgba(0, 242, 254, 0.1); padding: 10px 15px; border-radius: 8px; margin: 25px 0 15px 0; border-right: 4px solid var(--primary); font-weight: bold; }
-
-        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-        .item-card {
-            background: var(--card-bg);
-            border: 1px solid #30363d;
-            border-radius: 15px;
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            user-select: none;
+        /* القائمة المخصصة الفخمة */
+        .custom-select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
+        .select-styled {
+            background: rgba(0, 0, 0, 0.9); border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary-dim); color: var(--primary);
+            font-weight: 900; padding: 20px; border-radius: 15px; cursor: pointer;
+            text-align: center; display: flex; justify-content: center; align-items: center;
         }
+        .select-styled:after { content: '▼'; margin-right: 15px; font-size: 12px; }
+        .select-options {
+            position: absolute; top: 105%; right: 0; left: 0;
+            background: #080a0f; border: 2px solid var(--primary);
+            border-radius: 15px; z-index: 999; display: none;
+            overflow: hidden; box-shadow: 0 10px 40px rgba(0, 242, 255, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        .select-options div { padding: 20px; text-align: center; border-bottom: 1px solid rgba(0, 242, 255, 0.1); transition: 0.3s; font-weight: 700; color: white; cursor: pointer; }
+        .select-options div:hover { background: var(--primary); color: black; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .item-card i { font-size: 1.8rem; margin-bottom: 10px; display: block; color: var(--secondary); pointer-events: none; }
-        .item-card span { pointer-events: none; }
+        .container { padding: 20px; max-width: 900px; margin: 0 auto; padding-bottom: 200px; }
+        .order-form { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 25px; backdrop-filter: blur(5px); }
+        input { width: 100%; padding: 18px; border-radius: 15px; background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; font-family: 'Cairo'; font-weight: 700; box-sizing: border-box; }
         
-        .item-card.selected { 
-            border-color: var(--primary); 
-            background: rgba(0, 242, 254, 0.12); 
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
-        }
+        .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+        .price-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px 15px; text-align: center; cursor: pointer; transition: 0.4s; }
+        .price-card:hover { border-color: var(--gold); background: rgba(241, 196, 15, 0.05); transform: translateY(-5px); }
+        .price-card.active { border-color: var(--gold); background: rgba(241, 196, 15, 0.1); box-shadow: 0 0 20px var(--gold-glow); }
+
+        .confirm-btn { width: 100%; padding: 25px; background: linear-gradient(45deg, #f1c40f, #d4ac0d); border: none; border-radius: 20px; font-weight: 900; font-size: 22px; cursor: pointer; color: black; }
         
-        .item-card input[type="checkbox"] { display: none; }
-        .price-tag { display: block; color: var(--primary); font-weight: bold; margin-top: 8px; pointer-events: none; }
+        .support-float { position: fixed; bottom: 30px; left: 30px; background: #000; border: 2px solid var(--primary); padding: 15px 30px; border-radius: 50px; cursor: pointer; z-index: 4000; font-weight: 900; color: var(--primary); animation: pBlue 2s infinite; }
+        .go-to-p2 { position: fixed; bottom: 30px; right: 30px; background: #000; border: 2px solid var(--gold); padding: 15px 30px; border-radius: 50px; cursor: pointer; z-index: 4000; font-weight: 900; color: var(--gold); animation: pGold 2s infinite; }
+        @keyframes pBlue { 0%, 100% { box-shadow: 0 0 10px var(--primary-dim); } 50% { box-shadow: 0 0 20px var(--primary); } }
+        @keyframes pGold { 0%, 100% { box-shadow: 0 0 10px var(--gold-glow); } 50% { box-shadow: 0 0 20px var(--gold); } }
 
-        .dynamic-input { display: none; margin: 15px 0; animation: slideDown 0.4s ease; }
-        .dynamic-input input {
-            width: 100%; padding: 14px; background: var(--card-bg); border: 2px solid var(--primary);
-            border-radius: 10px; color: white; text-align: center; box-sizing: border-box; font-size: 1.1rem; outline: none;
-        }
-
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .price-note { background: rgba(243, 156, 18, 0.1); border: 1px dashed var(--accent); color: var(--accent); padding: 10px; border-radius: 8px; margin-top: 20px; text-align: center; font-size: 0.9rem; font-weight: bold; }
-
-        .btn-send {
-            width: 100%; padding: 18px; background: linear-gradient(45deg, #00f2fe, #4facfe);
-            border: none; border-radius: 12px; color: #000; font-weight: bold; font-size: 1.1rem;
-            cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        .fast-reply { display: block; text-align: center; font-size: 0.85rem; margin-top: 10px; color: #8b949e; }
-
-        .support-section { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
-        .support-btn { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px; border-radius: 10px; text-decoration: none; color: white; font-weight: 600; }
-        .wa { background: #25d366; } .tg { background: #0088cc; }
-
-        #error-toast {
-            display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #ff4b2b; color: white; padding: 12px 25px; border-radius: 50px; z-index: 1000; text-align: center; width: 85%; font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-card { background: #080a0f; border: 2px solid var(--primary); padding: 40px; border-radius: 35px; text-align: center; width: 90%; max-width: 420px; }
     </style>
 </head>
-<body>
+<body class="locked">
 
-    <div id="error-toast"></div>
+<div id="zain-alert-overlay" class="modal">
+    <div class="modal-card" style="border-color: var(--gold);">
+        <div id="alert-icon" style="font-size: 60px;">⚠️</div>
+        <h2 id="alert-title" style="color: var(--gold);">تنبيه يا بطل</h2>
+        <p id="alert-msg" style="font-size: 18px; line-height: 1.6;"></p>
+        <button onclick="closeZainAlert()" style="background: var(--gold); border: none; padding: 15px 40px; border-radius: 10px; font-weight: 900; cursor: pointer;">تمام ✅</button>
+    </div>
+</div>
 
-    <div class="container">
-        <div class="header">
-            <i class="fas fa-database"></i>
-            <h1>Zain Data Store</h1>
-            <p style="color: #8b949e; font-size: 0.9rem;">أسرع خدمات سحب البيانات والخدمات الحكومية</p>
-        </div>
-
-        <div class="section-title"><i class="fas fa-search-plus"></i> خدمات سحب الداتا</div>
-        <div class="card-grid">
-            <div class="item-card data-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="سحب داتا 010" data-price="45" data-prefix="010">
-                <i class="fas fa-mobile-alt"></i>
-                <span>سحب داتا 010</span>
-                <span class="price-tag">45 ج</span>
-            </div>
-            <div class="item-card data-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="سحب داتا 012" data-price="15" data-prefix="012">
-                <i class="fas fa-mobile-alt"></i>
-                <span>سحب داتا 012</span>
-                <span class="price-tag">15 ج</span>
-            </div>
-            <div class="item-card data-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="سحب داتا 015" data-price="40" data-prefix="015">
-                <i class="fas fa-mobile-alt"></i>
-                <span>سحب داتا 015</span>
-                <span class="price-tag">40 ج</span>
-            </div>
-        </div>
-
-        <div id="data-input-box" class="dynamic-input">
-            <input type="tel" id="phone-input" placeholder="ادخل الرقم المراد السحب عليه" maxlength="11">
-        </div>
-
-        <div class="section-title"><i class="fas fa-id-card"></i> الخدمات الحكومية</div>
-        <div class="card-grid">
-            <div class="item-card gov-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="شهادة ميلاد أول مرة" data-price="230">
-                <i class="fas fa-baby"></i><span>ميلاد (أول مرة)</span><span class="price-tag">230 ج</span>
-            </div>
-            <div class="item-card gov-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="شهادة ميلاد ثاني مرة" data-price="200">
-                <i class="fas fa-certificate"></i><span>ميلاد (ثاني مرة)</span><span class="price-tag">200 ج</span>
-            </div>
-            <div class="item-card gov-opt" onclick="handleCardClick(this)">
-                <input type="checkbox" name="service" value="قسيمة (زواج/طلاق)" data-price="240">
-                <i class="fas fa-ring"></i><span>قسيمة زواج/طلاق</span><span class="price-tag">240 ج</span>
-            </div>
+<div id="confirm-modal" class="modal">
+    <div class="modal-card" style="border-color: var(--primary);">
+        <h2 style="color: var(--primary);">تأكيد طلبك يا بطل 🛡️</h2>
+        <div id="summary" style="text-align: right; margin: 20px 0; line-height: 2; font-weight: 700; border-right: 3px solid var(--gold); padding-right: 15px;"></div>
+        <button onclick="sendOrder()" style="width:100%; background: var(--primary); border: none; padding: 18px; border-radius: 12px; font-weight: 900; cursor: pointer; color: #000;">تأكيد وإرسال 🚀</button>
+        <button onclick="document.getElementById('confirm-modal').style.display='none'" style="background:none; border:none; color:#777; margin-top:15px; cursor:pointer;">تعديل الب            </div>
             <div class="item-card gov-opt" onclick="handleCardClick(this)">
                 <input type="checkbox" name="service" value="شهادة وفاة" data-price="240">
                 <i class="fas fa-book-dead"></i><span>شهادة وفاة</span><span class="price-tag">240 ج</span>
