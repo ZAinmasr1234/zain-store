@@ -2,179 +2,1077 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZAIN STORE | الحماية الملكية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ZAIN AL WEB - شحن جواهر Free Fire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --neon: #00f2ff; --fire: #ff4500; --gold: #f1c40f; --bg: #010510; }
-        
-        body { 
-            margin: 0; padding: 0; background: var(--bg); font-family: 'Cairo', sans-serif; color: white; text-align: center; 
-            background-image: radial-gradient(circle at center, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        /* شاشة الافتتاح */
-        #intro-screen { position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: black; z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 1s ease-in-out; }
-        .fire-neon-text { font-size: 60px; font-weight: 900; color: #fff; text-shadow: 0 0 20px var(--fire), 0 0 40px var(--fire); animation: glow 1.2s infinite alternate; }
-        @keyframes glow { from { transform: scale(1); } to { transform: scale(1.05); } }
-
-        /* شاشة كلمة المرور */
-        #login-screen { position: fixed; width: 100%; height: 100%; top: 0; left: 0; background: var(--bg); z-index: 99999; display: none; flex-direction: column; justify-content: center; align-items: center; }
-        .login-box { background: rgba(255,255,255,0.05); padding: 40px; border-radius: 30px; border: 2px solid var(--neon); box-shadow: 0 0 30px var(--neon); width: 80%; max-width: 400px; }
-
-        /* ستايل الموقع الأساسي (مخفي في البداية) */
-        #main-content { display: none; }
-
-        nav { background: rgba(0,0,0,0.9); padding: 12px 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--neon); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
-        .brand-name { font-size: 22px; color: var(--gold); text-shadow: 0 0 10px var(--gold); text-decoration: none; font-weight: 900; }
-
-        #side-menu { position: fixed; top: 0; right: -100%; width: 300px; height: 100%; background: rgba(1, 5, 16, 0.98); border-left: 2px solid var(--gold); z-index: 2000; transition: 0.5s; padding: 30px 15px; text-align: right; overflow-y: auto; }
-        .support-link-btn { display: block; background: #25d366; color: white; text-align: center; padding: 12px; border-radius: 12px; text-decoration: none; margin: 10px 0; font-weight: bold; }
-
-        .helper-card { background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--gold); border-radius: 20px; padding: 15px; margin: 20px auto; max-width: 550px; display: flex; align-items: center; gap: 15px; }
-        .price-card { background: rgba(255,255,255,0.05); border: 1px solid var(--neon); border-radius: 25px; padding: 25px; margin: 20px auto; max-width: 500px; box-shadow: 0 0 30px rgba(0,242,255,0.1); }
-        .price-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .cost { color: var(--gold); font-size: 19px; font-weight: bold; }
-
-        .order-box { background: rgba(0,0,0,0.8); padding: 30px; border-radius: 35px; border: 2px solid var(--gold); max-width: 550px; margin: 20px auto; }
-        input, select { width: 100%; padding: 18px; margin: 10px 0; border-radius: 15px; border: 1px solid var(--neon); background: black; color: white; font-size: 16px; box-sizing: border-box; text-align: center; }
         
-        .btn-send { background: linear-gradient(90deg, #ff4500, #ff8c00); color: white; width: 100%; padding: 18px; border: none; border-radius: 20px; font-size: 22px; font-weight: 900; cursor: pointer; margin-top: 10px; }
-        .locked-section { opacity: 0.4; filter: grayscale(1); margin: 40px 0; }
+        :root {
+            --gold: #FFD700;
+            --gold-light: #FFE55C;
+            --gold-dark: #D4A000;
+            --orange: #FF6B00;
+            --bg: #07070F;
+            --bg-card: #0D0D1A;
+            --bg-elevated: #12121F;
+            --border: rgba(255,255,255,0.06);
+            --text: #FFFFFF;
+            --text-muted: rgba(255,255,255,0.45);
+            --text-dim: rgba(255,255,255,0.25);
+            --success: #00E676;
+            --accent: #FF2D55;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .bg-animated::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,107,0,0.08) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .bg-animated::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,215,0,0.06) 0%, transparent 70%);
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-30px, 20px) scale(1.1); }
+            66% { transform: translate(20px, -30px) scale(0.95); }
+        }
+        
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7,7,15,0.85);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 25px rgba(255,107,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .brand-logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        .brand-text h1 {
+            font-size: 1.15rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .brand-text span {
+            font-size: 0.62rem;
+            color: var(--text-dim);
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+        
+        .menu-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .menu-btn:hover {
+            border-color: rgba(255,215,0,0.3);
+            box-shadow: 0 0 20px rgba(255,215,0,0.1);
+        }
+        
+        .menu-btn span {
+            display: block;
+            width: 18px;
+            height: 2.5px;
+            background: linear-gradient(90deg, var(--gold), var(--orange));
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0A0A18 0%, #111125 100%);
+            z-index: 300;
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            border-right: 1px solid rgba(255,215,0,0.08);
+        }
+        
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        
+        .sidebar-header {
+            padding: 30px 24px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .sidebar-brand .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 20px rgba(255,107,0,0.25);
+        }
+        
+        .sidebar-brand h2 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sidebar-brand p {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+        
+        .sidebar-section {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .sidebar-section-title {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            color: var(--text);
+            font-family: inherit;
+            text-align: right;
+        }
+        
+        .sidebar-item:hover {
+            background: rgba(255,215,0,0.06);
+            border-color: rgba(255,215,0,0.2);
+            transform: translateX(-4px);
+        }
+        
+        .sidebar-item .icon-wrap {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-item .icon-wrap.green {
+            background: rgba(0,230,118,0.1);
+            border: 1px solid rgba(0,230,118,0.2);
+        }
+        
+        .sidebar-item .text h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        
+        .sidebar-item .text p {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+        
+        .sidebar-item .arrow {
+            margin-right: auto;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+            backdrop-filter: blur(8px);
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .main {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 28px 0 20px;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(255,107,0,0.15), rgba(255,215,0,0.1));
+            border: 1px solid rgba(255,107,0,0.2);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            color: var(--orange);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--orange);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        
+        .hero h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .hero h2 .highlight {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .game-card {
+            background: linear-gradient(135deg, rgba(255,107,0,0.08), rgba(255,215,0,0.04));
+            border: 1px solid rgba(255,107,0,0.15);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, transparent 70%);
+        }
+        
+        .game-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B00, #FF8C00);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 8px 30px rgba(255,107,0,0.3);
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+        
+        .game-info {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        
+        .game-info h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .game-info p {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+        
+        .game-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0,230,118,0.1);
+            border: 1px solid rgba(0,230,118,0.2);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.68rem;
+            color: var(--success);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .game-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+        
+        .section {
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease forwards;
+        }
+        
+        .section:nth-child(3) { animation-delay: 0.1s; }
+        .section:nth-child(4) { animation-delay: 0.2s; }
+        .section:nth-child(5) { animation-delay: 0.3s; }
+        .section:nth-child(6) { animation-delay: 0.4s; }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+        
+        .section-title .icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .section-badge {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            background: var(--bg-elevated);
+            padding: 4px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-weight: 700;
+        }
+        
+        .input-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-wrapper input {
+            width: 100%;
+            padding: 16px 18px;
+            padding-left: 50px;
+            border-radius: 14px;
+            border: 2px solid rgba(255,255,255,0.08);
+            background: rgba(0,0,0,0.3);
+            color: var(--text);
+            font-size: 1.05rem;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .input-wrapper input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(255,215,0,0.08), 0 0 30px rgba(255,215,0,0.05);
+        }
+        
+        .input-wrapper input::placeholder {
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            opacity: 0.3;
+        }
+        
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .package-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            padding: 18px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--orange));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .package-card:hover {
+            border-color: rgba(255,215,0,0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .package-card:hover::before {
+            opacity: 0.5;
+        }
+        
+        .package-card.selected {
+            border-color: var(--gold);
+            background: linear-gradient(180deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02));
+            box-shadow: 0 0 30px rgba(255,215,0,0.1), 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .package-card.selected::before {
+            opacity: 1;
+        }
+        
+        .package-card .check {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--bg);
+            font-weight: 900;
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .package-card.selected .check {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+        
+        .package-diamond {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 10px rgba(0,176,255,0.3));
+        }
+        
+        .package-amount {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 2px;
+        }
+        
+        .package-amount-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+        
+        .package-price {
+            font-size: 1.1rem;
+            color: var(--success);
+            font-weight: 800;
+        }
+        
+        .package-currency {
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            margin-top: 3px;
+        }
+        
+        .summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-top: 4px;
+            padding-top: 16px;
+            border-top: 2px solid rgba(255,215,0,0.1);
+        }
+        
+        .summary-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .summary-value {
+            color: var(--text);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .summary-item:last-child .summary-label {
+            color: var(--gold);
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+        
+        .summary-item:last-child .summary-value {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+        
+        .order-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            border: none;
+            border-radius: 16px;
+            color: var(--bg);
+            font-size: 1.05rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 4px 25px rgba(255,107,0,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .order-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .order-btn:hover::before {
+            left: 100%;
+        }
+        
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255,107,0,0.4);
+        }
+        
+        .order-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .order-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .order-btn:disabled::before {
+            display: none;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 10px;
+        }
+        
+        .footer-brand {
+            font-size: 1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        
+        .footer-copy {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,215,0,0.2);
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
-
-<div id="intro-screen">
-    <div class="fire-neon-text">ZAIN STORE</div>
-    <div style="color: var(--gold); margin-top: 20px; font-weight: bold;">FF BOOYAH EDITION 🛡️</div>
-</div>
-<audio id="action-sound" src="https://www.soundjay.com/nature/thunder-01.mp3" preload="auto"></audio>
-
-<div id="login-screen">
-    <div class="login-box">
-        <h2 style="color: var(--gold); margin-bottom: 20px;">🛡️ وصول مقيد</h2>
-        <p style="font-size: 14px; color: #ccc;">أدخل كلمة المرور الخاصة بالإمبراطور زين</p>
-        <input type="password" id="pass-input" placeholder="ادخل الكود هنا...">
-        <button class="btn-send" onclick="checkPassword()">دخول للمتجر ✅</button>
-        <p id="error-msg" style="color: var(--fire); font-size: 13px; margin-top: 10px; display: none;">❌ كلمة المرور غير صحيحة!</p>
-    </div>
-</div>
-
-<div id="main-content">
-    <nav>
-        <a href="#" class="brand-name">ZAIN STORE 👑</a>
-        <button style="background:none; border:1px solid var(--neon); color:var(--neon); padding:5px 15px; border-radius:8px; cursor:pointer;" onclick="toggleMenu()">الدعم</button>
-    </nav>
-
-    <div id="side-menu">
-        <h3 style="color: var(--gold); text-align: center;">تواصل معنا 📞</h3>
-        <a href="https://wa.me/201021431977" class="support-link-btn">واتساب: دعم 1 (زين)</a>
-        <a href="https://wa.me/2012010233693" class="support-link-btn">واتساب: دعم 2</a>
-        <a href="https://wa.me/201203955533" class="support-link-btn" style="background: #0088cc;">واتساب: فورتكس (المساعد)</a>
-        <button class="btn-send" style="padding:10px; font-size:14px;" onclick="toggleMenu()">إغلاق</button>
-    </div>
-
-    <section class="game-section">
-        <div class="helper-card">
-            <div style="font-size: 30px;">🛰️</div>
-            <div class="helper-info" style="text-align: right;">
-                <h4>المساعد الرسمي: فورتكس</h4>
-                <p style="font-size: 12px; color: #ccc;">متاح للشحن الفوري في حال انشغال زين.</p>
+    <div class="bg-animated"></div>
+    
+    <header class="header">
+        <div class="header-inner">
+            <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="brand">
+                <div class="brand-logo">💎</div>
+                <div class="brand-text">
+                    <h1>ZAIN AL WEB</h1>
+                    <span>شحن الألعاب</span>
+                </div>
             </div>
         </div>
-
-        <div style="margin-top: 20px;">
-            <h1 style="color: var(--fire); font-size: 40px; text-shadow: 0 0 20px var(--fire);">FREE FIRE</h1>
-            <p style="color: var(--neon); font-weight: bold;">BOOYAH! | الأسعار المخفضة 💎</p>
+    </header>
+    
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <div class="logo-icon">💎</div>
+                <div>
+                    <h2>ZAIN AL WEB</h2>
+                    <p>خدمة شحن الألعاب</p>
+                </div>
+            </div>
         </div>
         
-        <div class="price-card">
-            <div class="price-item"><span>50 جوهرة</span> <span class="cost">30 ج</span></div>
-            <div class="price-item"><span>100 جوهرة</span> <span class="cost">55 ج</span></div>
-            <div class="price-item"><span>210 جوهرة</span> <span class="cost">110 ج</span></div>
-            <div class="price-item"><span>310 جوهرة</span> <span class="cost">155 ج</span></div>
-            <div class="price-item"><span>520 جوهرة</span> <span class="cost">255 ج</span></div>
-            <div class="price-item"><span>1060 جوهرة</span> <span class="cost">510 ج</span></div>
-            <div class="price-item" style="border:none; color: var(--gold);"><span>2200 جوهرة</span> <span class="cost">1100 ج</span></div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">طلب شحن</div>
+            <button class="sidebar-item" onclick="sendOrderMenu()">
+                <div class="icon-wrap green">🚀</div>
+                <div class="text">
+                    <h4>اطلب شحن</h4>
+                    <p>إرسال طلب شحن جديد</p>
+                </div>
+                <span class="arrow">←</span>
+            </button>
         </div>
-
-        <div class="order-box">
-            <select id="amount_select">
-                <option value="" disabled selected>--- اختر الكمية ---</option>
-                <option value="50 جوهرة">50 جوهرة - 30 ج</option>
-                <option value="100 جوهرة">100 جوهرة - 55 ج</option>
-                <option value="210 جوهرة">210 جوهرة - 110 ج</option>
-                <option value="310 جوهرة">310 جوهرة - 155 ج</option>
-                <option value="520 جوهرة">520 جوهرة - 255 ج</option>
-                <option value="1060 جوهرة">1060 جوهرة - 510 ج</option>
-                <option value="2200 جوهرة">2200 جوهرة - 1100 ج</option>
-            </select>
-            <input type="text" id="id_player" placeholder="الـ ID + اسم اللاعب">
-            <input type="tel" id="sender_num" placeholder="رقم المحفظة (11 رقم)" maxlength="11">
-            <input type="file" id="screenshot_file" accept="image/*">
-            <button class="btn-send" onclick="validate('zain')">إرسال الطلب لزين ✅</button>
-            <button class="btn-send" style="background: #0088cc;" onclick="validate('vortex')">إرسال لـ فورتكس 🛰️</button>
+        
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">التواصل</div>
+            <button class="sidebar-item" onclick="openWhatsApp()">
+                <div class="icon-wrap green">💬</div>
+                <div class="text">
+                    <h4>واتساب - الدعم</h4>
+                    <p>تواصل مع فريق الدعم</p>
+                </div>
+                <span class="arrow">←</span>
+            </button>
         </div>
-    </section>
-
-    <div class="locked-section"><h2>PUBG MOBILE (قريباً)</h2></div>
-    <div class="locked-section"><h2>ROBLOX (قريباً)</h2></div>
-</div>
-
-<script>
-    // كلمة المرور (تقدر تغيرها من هنا)
-    const SECRET_PASSWORD = "ZAIN2026";
-
-    window.onload = function() {
-        const sound = document.getElementById('action-sound');
-        sound.play().catch(e => {});
+    </nav>
+    
+    <main class="main">
+        <div class="hero">
+            <div class="hero-badge">الأكثر مبيعاً</div>
+            <h2>شحن <span class="highlight">جواهر Free Fire</span></h2>
+            <p>أسرع وأسهل طريقة لشحن حسابك بأمان</p>
+        </div>
         
-        setTimeout(() => {
-            document.getElementById('intro-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('intro-screen').style.display = 'none';
-                document.getElementById('login-screen').style.display = 'flex';
-            }, 1000);
-        }, 3000);
-    };
-
-    function checkPassword() {
-        const input = document.getElementById('pass-input').value;
-        const error = document.getElementById('error-msg');
+        <div class="game-card">
+            <div class="game-icon">🔥</div>
+            <div class="game-info">
+                <h3>Free Fire</h3>
+                <p>شحن فوري ومضمون 100%</p>
+            </div>
+            <div class="game-status">متاح</div>
+        </div>
         
-        if(input === SECRET_PASSWORD) {
-            document.getElementById('login-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-            }, 500);
-        } else {
-            error.style.display = 'block';
-            document.getElementById('pass-input').value = "";
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="icon">📝</div>
+                    معرف اللاعب
+                </div>
+                <div class="section-badge">مطلوب</div>
+            </div>
+            <div class="input-card">
+                <label class="input-label" for="playerId">أدخل Player ID الخاص بك</label>
+                <div class="input-wrapper">
+                    <input type="text" id="playerId" placeholder="مثال: 1234567890" oninput="updateSummary()" maxlength="12" inputmode="numeric">
+                    <span class="input-icon">👤</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="icon">💎</div>
+                    اختر الباقة
+                </div>
+                <div class="section-badge">7 باقات</div>
+            </div>
+            <div class="packages-grid" id="packagesGrid"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="icon">📋</div>
+                    ملخص الطلب
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-item">
+                    <span class="summary-label">🎮 اللعبة</span>
+                    <span class="summary-value">Free Fire</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">🆔 معرف اللاعب</span>
+                    <span class="summary-value" id="summaryId">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">💎 الباقة</span>
+                    <span class="summary-value" id="summaryPackage">-</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">💰 السعر الإجمالي</span>
+                    <span class="summary-value" id="summaryPrice">-</span>
+                </div>
+            </div>
+            <button class="order-btn" id="orderBtn" onclick="sendOrder()" disabled>
+                🚀 اطلب الآن
+            </button>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-brand">ZAIN AL WEB</div>
+            <div class="footer-copy">جميع الحقوق محفوظة © 2025</div>
+        </div>
+    </main>
+    
+    <script>
+        const CONTACT_PHONE = "+201021431977";
+        
+        const packages = [
+            { diamonds: 50, price: 30 },
+            { diamonds: 100, price: 60 },
+            { diamonds: 210, price: 120 },
+            { diamonds: 310, price: 180 },
+            { diamonds: 520, price: 300 },
+            { diamonds: 1060, price: 600 },
+            { diamonds: 2200, price: 1200 }
+        ];
+        
+        let selectedPackage = null;
+        
+        function renderPackages() {
+            const grid = document.getElementById('packagesGrid');
+            grid.innerHTML = packages.map((pkg, index) => `
+                <div class="package-card" onclick="selectPackage(${index})" id="pkg-${index}">
+                    <div class="check">✓</div>
+                    <div class="package-diamond">💎</div>
+                    <div class="package-amount">${pkg.diamonds.toLocaleString()}</div>
+                    <div class="package-amount-label">جوهرة</div>
+                    <div class="package-price">${pkg.price} جنيه</div>
+                    <div class="package-currency">مصري</div>
+                </div>
+            `).join('');
         }
-    }
-
-    function toggleMenu() {
-        const menu = document.getElementById('side-menu');
-        menu.style.right = (menu.style.right === '0px') ? '-100%' : '0px';
-    }
-
-    function validate(target) {
-        const amt = document.getElementById('amount_select').value;
-        const id = document.getElementById('id_player').value;
-        const num = document.getElementById('sender_num').value;
-        const file = document.getElementById('screenshot_file').files[0];
-        const egyptRegex = /^(010|011|012|015)[0-9]{8}$/;
-
-        if(!amt || !id || !num || !file) { alert("⚠️ أكمل البيانات!"); return; }
-        if(!egyptRegex.test(num)) { alert("❌ الرقم غير صحيح!"); return; }
-
-        const phone = (target === 'zain') ? '201021431977' : '201203955533';
-        const text = encodeURIComponent(`🎮 طلب شحن VIP\n💎 الكمية: ${amt}\n🆔 الـ ID: ${id}\n📲 المحول: ${num}\n🛡️ ZAIN STORE`);
-        window.location.replace("https://api.whatsapp.com/send?phone=" + phone + "&text=" + text);
-    }
-</script>
+        
+        function selectPackage(index) {
+            document.querySelectorAll('.package-card').forEach(card => card.classList.remove('selected'));
+            document.getElementById(`pkg-${index}`).classList.add('selected');
+            selectedPackage = packages[index];
+            updateSummary();
+        }
+        
+        function updateSummary() {
+            const playerId = document.getElementById('playerId').value.trim();
+            document.getElementById('summaryId').textContent = playerId || '-';
+            document.getElementById('summaryPackage').textContent = 
+                selectedPackage ? `${selectedPackage.diamonds.toLocaleString()} جوهرة` : '-';
+            document.getElementById('summaryPrice').textContent = 
+                selectedPackage ? `${selectedPackage.price} جنيه` : '-';
+            document.getElementById('orderBtn').disabled = !(playerId && selectedPackage);
+        }
+        
+        function sendOrder() {
+            const playerId = document.getElementById('playerId').value.trim();
+            if (!playerId || !selectedPackage) return;
+            
+            const msg = `مرحباً ZAIN AL Web،\n\nأرغب في شحن جواهر Free Fire\n\n🎮 اللعبة: Free Fire\n🆔 معرف اللاعب: ${playerId}\n💎 الباقة: ${selectedPackage.diamonds.toLocaleString()} جوهرة\n💰 السعر: ${selectedPackage.price} جنيه مصري\n\nيرجى التأكيد على الطلب، شكراً!`;
+            
+            window.open(`https://wa.me/${CONTACT_PHONE.replace('+', '')}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+        
+        function sendOrderMenu() {
+            toggleMenu();
+            setTimeout(() => {
+                document.getElementById('playerId').focus();
+                document.getElementById('playerId').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+        
+        function openWhatsApp() {
+            const msg = encodeURIComponent("مرحباً ZAIN AL WEB، أرغب في الاستفسار عن شحن جواهر Free Fire");
+            window.open(`https://wa.me/${CONTACT_PHONE.replace('+', '')}?text=${msg}`, '_blank');
+            toggleMenu();
+        }
+        
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const btn = document.getElementById('menuBtn');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            btn.classList.toggle('active');
+        }
+        
+        document.getElementById('playerId').addEventListener('input', function() {
+            this.value = this.value.replace(/\\D/g, '');
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('sidebar').classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+        
+        renderPackages();
+    </script>
 </body>
 </html>
-
